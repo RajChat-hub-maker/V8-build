@@ -1,0 +1,79 @@
+defines = -DUSE_UDEV -DUSE_AURA=1 -DUSE_GLIB=1 -DUSE_OZONE=1 -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE -D_GNU_SOURCE -DCR_CLANG_REVISION=\"llvmorg-20-init-9764-gb81d8e90-1\" -D_LIBCPP_HARDENING_MODE=_LIBCPP_HARDENING_MODE_EXTENSIVE -D_LIBCPP_DISABLE_VISIBILITY_ANNOTATIONS -D_LIBCXXABI_DISABLE_VISIBILITY_ANNOTATIONS -DCR_LIBCXX_REVISION=c8eec3629a9e1164a97a5202e40efb4ec4d148e1 -DTMP_REBUILD_HACK -DCR_SYSROOT_KEY=20230611T210420Z-2 -DNDEBUG -DNVALGRIND -DDYNAMIC_ANNOTATIONS_ENABLED=0
+include_dirs = -I../.. -Igen -I../../buildtools/third_party/libc++ -I../../third_party/re2/src -I../../third_party/abseil-cpp
+cflags = -fno-delete-null-pointer-checks -fno-ident -fno-strict-aliasing -fstack-protector -funwind-tables -fPIC -pthread -fcolor-diagnostics -fmerge-all-constants -fno-sized-deallocation -fcrash-diagnostics-dir=../../tools/clang/crashreports -mllvm -instcombine-lower-dbg-declare=0 -mllvm -split-threshold-for-reg-with-hint=0 -ffp-contract=off -Wa,--crel,--allow-experimental-crel -fcomplete-member-pointers -m64 -msse3 -Wno-builtin-macro-redefined -D__DATE__= -D__TIME__= -D__TIMESTAMP__= -ffile-compilation-dir=. -no-canonical-prefixes -ftrivial-auto-var-init=pattern -O2 -fdata-sections -ffunction-sections -fno-unique-section-names -fno-math-errno -fno-omit-frame-pointer -g0 -fvisibility=hidden -Wheader-hygiene -Wstring-conversion -Wtautological-overlap-compare -Xclang -add-plugin -Xclang find-bad-constructs -Xclang -plugin-arg-find-bad-constructs -Xclang span-ctor-from-string-literal -Xclang -plugin-arg-find-bad-constructs -Xclang raw-ref-template-as-trivial-member -Xclang -plugin-arg-find-bad-constructs -Xclang raw-span-template-as-trivial-member -Xclang -plugin-arg-find-bad-constructs -Xclang check-stack-allocated -Xclang -plugin-arg-find-bad-constructs -Xclang check-ipc -Xclang -add-plugin -Xclang raw-ptr-plugin -Xclang -plugin-arg-raw-ptr-plugin -Xclang check-raw-ptr-to-stack-allocated -Xclang -plugin-arg-raw-ptr-plugin -Xclang disable-check-raw-ptr-to-stack-allocated-error -Xclang -plugin-arg-raw-ptr-plugin -Xclang raw-ptr-exclude-path=../../third_party/dawn/ -Wall -Wno-unused-variable -Wno-c++11-narrowing -Wno-unused-but-set-variable -Wno-misleading-indentation -Wno-missing-field-initializers -Wno-unused-parameter -Wno-psabi -Wloop-analysis -Wno-unneeded-internal-declaration -Wno-cast-function-type -Wno-thread-safety-reference-return -Werror
+cflags_cc = -std=c++20 -Wno-trigraphs -gsimple-template-names -fno-exceptions -fno-rtti -nostdinc++ -isystem../../third_party/libc++/src/include -isystem../../third_party/libc++abi/src/include --sysroot=../../build/linux/debian_bullseye_amd64-sysroot -fvisibility-inlines-hidden -Wno-invalid-offsetof -Wenum-compare-conditional -Wno-c++11-narrowing-const-reference -Wno-missing-template-arg-list-after-template-kw -Wno-dangling-assignment-gsl
+label_name = re2
+target_out_dir = obj/third_party/re2
+target_output_name = libre2
+
+build obj/third_party/re2/re2/bitmap256.o: cxx ../../third_party/re2/src/re2/bitmap256.cc || phony/build/chromeos_buildflags
+  source_file_part = bitmap256.cc
+  source_name_part = bitmap256
+build obj/third_party/re2/re2/bitstate.o: cxx ../../third_party/re2/src/re2/bitstate.cc || phony/build/chromeos_buildflags
+  source_file_part = bitstate.cc
+  source_name_part = bitstate
+build obj/third_party/re2/re2/compile.o: cxx ../../third_party/re2/src/re2/compile.cc || phony/build/chromeos_buildflags
+  source_file_part = compile.cc
+  source_name_part = compile
+build obj/third_party/re2/re2/dfa.o: cxx ../../third_party/re2/src/re2/dfa.cc || phony/build/chromeos_buildflags
+  source_file_part = dfa.cc
+  source_name_part = dfa
+build obj/third_party/re2/re2/filtered_re2.o: cxx ../../third_party/re2/src/re2/filtered_re2.cc || phony/build/chromeos_buildflags
+  source_file_part = filtered_re2.cc
+  source_name_part = filtered_re2
+build obj/third_party/re2/re2/mimics_pcre.o: cxx ../../third_party/re2/src/re2/mimics_pcre.cc || phony/build/chromeos_buildflags
+  source_file_part = mimics_pcre.cc
+  source_name_part = mimics_pcre
+build obj/third_party/re2/re2/nfa.o: cxx ../../third_party/re2/src/re2/nfa.cc || phony/build/chromeos_buildflags
+  source_file_part = nfa.cc
+  source_name_part = nfa
+build obj/third_party/re2/re2/onepass.o: cxx ../../third_party/re2/src/re2/onepass.cc || phony/build/chromeos_buildflags
+  source_file_part = onepass.cc
+  source_name_part = onepass
+build obj/third_party/re2/re2/parse.o: cxx ../../third_party/re2/src/re2/parse.cc || phony/build/chromeos_buildflags
+  source_file_part = parse.cc
+  source_name_part = parse
+build obj/third_party/re2/re2/perl_groups.o: cxx ../../third_party/re2/src/re2/perl_groups.cc || phony/build/chromeos_buildflags
+  source_file_part = perl_groups.cc
+  source_name_part = perl_groups
+build obj/third_party/re2/re2/prefilter.o: cxx ../../third_party/re2/src/re2/prefilter.cc || phony/build/chromeos_buildflags
+  source_file_part = prefilter.cc
+  source_name_part = prefilter
+build obj/third_party/re2/re2/prefilter_tree.o: cxx ../../third_party/re2/src/re2/prefilter_tree.cc || phony/build/chromeos_buildflags
+  source_file_part = prefilter_tree.cc
+  source_name_part = prefilter_tree
+build obj/third_party/re2/re2/prog.o: cxx ../../third_party/re2/src/re2/prog.cc || phony/build/chromeos_buildflags
+  source_file_part = prog.cc
+  source_name_part = prog
+build obj/third_party/re2/re2/re2.o: cxx ../../third_party/re2/src/re2/re2.cc || phony/build/chromeos_buildflags
+  source_file_part = re2.cc
+  source_name_part = re2
+build obj/third_party/re2/re2/regexp.o: cxx ../../third_party/re2/src/re2/regexp.cc || phony/build/chromeos_buildflags
+  source_file_part = regexp.cc
+  source_name_part = regexp
+build obj/third_party/re2/re2/set.o: cxx ../../third_party/re2/src/re2/set.cc || phony/build/chromeos_buildflags
+  source_file_part = set.cc
+  source_name_part = set
+build obj/third_party/re2/re2/simplify.o: cxx ../../third_party/re2/src/re2/simplify.cc || phony/build/chromeos_buildflags
+  source_file_part = simplify.cc
+  source_name_part = simplify
+build obj/third_party/re2/re2/tostring.o: cxx ../../third_party/re2/src/re2/tostring.cc || phony/build/chromeos_buildflags
+  source_file_part = tostring.cc
+  source_name_part = tostring
+build obj/third_party/re2/re2/unicode_casefold.o: cxx ../../third_party/re2/src/re2/unicode_casefold.cc || phony/build/chromeos_buildflags
+  source_file_part = unicode_casefold.cc
+  source_name_part = unicode_casefold
+build obj/third_party/re2/re2/unicode_groups.o: cxx ../../third_party/re2/src/re2/unicode_groups.cc || phony/build/chromeos_buildflags
+  source_file_part = unicode_groups.cc
+  source_name_part = unicode_groups
+build obj/third_party/re2/re2/rune.o: cxx ../../third_party/re2/src/util/rune.cc || phony/build/chromeos_buildflags
+  source_file_part = rune.cc
+  source_name_part = rune
+build obj/third_party/re2/re2/strutil.o: cxx ../../third_party/re2/src/util/strutil.cc || phony/build/chromeos_buildflags
+  source_file_part = strutil.cc
+  source_name_part = strutil
+
+build obj/third_party/re2/libre2.a: alink obj/third_party/re2/re2/bitmap256.o obj/third_party/re2/re2/bitstate.o obj/third_party/re2/re2/compile.o obj/third_party/re2/re2/dfa.o obj/third_party/re2/re2/filtered_re2.o obj/third_party/re2/re2/mimics_pcre.o obj/third_party/re2/re2/nfa.o obj/third_party/re2/re2/onepass.o obj/third_party/re2/re2/parse.o obj/third_party/re2/re2/perl_groups.o obj/third_party/re2/re2/prefilter.o obj/third_party/re2/re2/prefilter_tree.o obj/third_party/re2/re2/prog.o obj/third_party/re2/re2/re2.o obj/third_party/re2/re2/regexp.o obj/third_party/re2/re2/set.o obj/third_party/re2/re2/simplify.o obj/third_party/re2/re2/tostring.o obj/third_party/re2/re2/unicode_casefold.o obj/third_party/re2/re2/unicode_groups.o obj/third_party/re2/re2/rune.o obj/third_party/re2/re2/strutil.o | ../../third_party/llvm-build/Release+Asserts/lib/clang/20/lib/x86_64-unknown-linux-gnu/libclang_rt.builtins.a || phony/third_party/abseil-cpp/absl phony/third_party/abseil-cpp/absl/base/base phony/third_party/abseil-cpp/absl/base/log_severity phony/third_party/abseil-cpp/absl/base/raw_logging_internal phony/third_party/abseil-cpp/absl/base/spinlock_wait phony/third_party/abseil-cpp/absl/container/btree phony/third_party/abseil-cpp/absl/container/common phony/third_party/abseil-cpp/absl/types/optional phony/third_party/abseil-cpp/absl/types/bad_optional_access phony/third_party/abseil-cpp/absl/container/layout phony/third_party/abseil-cpp/absl/debugging/demangle_internal phony/third_party/abseil-cpp/absl/debugging/demangle_rust phony/third_party/abseil-cpp/absl/debugging/decode_rust_punycode phony/third_party/abseil-cpp/absl/debugging/utf8_for_code_point phony/third_party/abseil-cpp/absl/strings/strings phony/third_party/abseil-cpp/absl/strings/string_view phony/third_party/abseil-cpp/absl/base/throw_delegate phony/third_party/abseil-cpp/absl/strings/charset phony/third_party/abseil-cpp/absl/strings/internal phony/third_party/abseil-cpp/absl/base/endian phony/third_party/abseil-cpp/absl/numeric/int128 phony/third_party/abseil-cpp/absl/types/span phony/third_party/abseil-cpp/absl/strings/cord phony/third_party/abseil-cpp/absl/strings/cord_internal phony/third_party/abseil-cpp/absl/container/inlined_vector phony/third_party/abseil-cpp/absl/container/inlined_vector_internal phony/third_party/abseil-cpp/absl/crc/crc_cord_state phony/third_party/abseil-cpp/absl/crc/crc32c phony/third_party/abseil-cpp/absl/crc/cpu_detect phony/third_party/abseil-cpp/absl/crc/crc_internal phony/third_party/abseil-cpp/absl/strings/str_format phony/third_party/abseil-cpp/absl/strings/str_format_internal phony/third_party/abseil-cpp/absl/container/fixed_array phony/third_party/abseil-cpp/absl/strings/cordz_functions phony/third_party/abseil-cpp/absl/profiling/exponential_biased phony/third_party/abseil-cpp/absl/strings/cordz_info phony/third_party/abseil-cpp/absl/strings/cordz_handle phony/third_party/abseil-cpp/absl/synchronization/synchronization phony/third_party/abseil-cpp/absl/synchronization/graphcycles_internal phony/third_party/abseil-cpp/absl/base/malloc_internal phony/third_party/abseil-cpp/absl/synchronization/kernel_timeout_internal phony/third_party/abseil-cpp/absl/time/time phony/third_party/abseil-cpp/absl/time/internal/cctz/civil_time phony/third_party/abseil-cpp/absl/time/internal/cctz/time_zone phony/third_party/abseil-cpp/absl/base/tracing_internal phony/third_party/abseil-cpp/absl/debugging/stacktrace phony/third_party/abseil-cpp/absl/debugging/debugging_internal phony/third_party/abseil-cpp/absl/debugging/symbolize phony/third_party/abseil-cpp/absl/strings/cordz_update_scope phony/third_party/abseil-cpp/absl/container/flat_hash_map phony/third_party/abseil-cpp/absl/container/hash_container_defaults phony/third_party/abseil-cpp/absl/container/hash_function_defaults phony/third_party/abseil-cpp/absl/hash/hash phony/third_party/abseil-cpp/absl/hash/city phony/third_party/abseil-cpp/absl/hash/low_level_hash phony/third_party/abseil-cpp/absl/types/variant phony/third_party/abseil-cpp/absl/types/bad_variant_access phony/third_party/abseil-cpp/absl/container/raw_hash_map phony/third_party/abseil-cpp/absl/container/raw_hash_set phony/third_party/abseil-cpp/absl/container/hashtablez_sampler phony/third_party/abseil-cpp/absl/profiling/sample_recorder phony/third_party/abseil-cpp/absl/container/flat_hash_set phony/third_party/abseil-cpp/absl/container/node_hash_map phony/third_party/abseil-cpp/absl/container/node_hash_set phony/third_party/abseil-cpp/absl/debugging/failure_signal_handler phony/third_party/abseil-cpp/absl/debugging/examine_stack phony/third_party/abseil-cpp/absl/log/absl_check phony/third_party/abseil-cpp/absl/log/internal/check_impl phony/third_party/abseil-cpp/absl/log/internal/check_op phony/third_party/abseil-cpp/absl/log/internal/nullguard phony/third_party/abseil-cpp/absl/log/internal/nullstream phony/third_party/abseil-cpp/absl/log/internal/strip phony/third_party/abseil-cpp/absl/log/internal/log_message phony/third_party/abseil-cpp/absl/log/internal/append_truncated phony/third_party/abseil-cpp/absl/log/internal/format phony/third_party/abseil-cpp/absl/log/internal/globals phony/third_party/abseil-cpp/absl/log/internal/log_sink_set phony/third_party/abseil-cpp/absl/log/globals phony/third_party/abseil-cpp/absl/log/internal/vlog_config phony/third_party/abseil-cpp/absl/log/internal/fnmatch phony/third_party/abseil-cpp/absl/log/log_entry phony/third_party/abseil-cpp/absl/log/log_sink phony/third_party/abseil-cpp/absl/log/internal/proto phony/third_party/abseil-cpp/absl/base/strerror phony/third_party/abseil-cpp/absl/log/log_sink_registry phony/third_party/abseil-cpp/absl/log/internal/conditions phony/third_party/abseil-cpp/absl/log/absl_log phony/third_party/abseil-cpp/absl/log/internal/log_impl phony/third_party/abseil-cpp/absl/log/absl_vlog_is_on phony/third_party/abseil-cpp/absl/log/die_if_null phony/third_party/abseil-cpp/absl/log/log phony/third_party/abseil-cpp/absl/log/vlog_is_on phony/third_party/abseil-cpp/absl/log/initialize phony/third_party/abseil-cpp/absl/random/random phony/third_party/abseil-cpp/absl/random/distributions phony/third_party/abseil-cpp/absl/random/internal/fast_uniform_bits phony/third_party/abseil-cpp/absl/random/internal/traits phony/third_party/abseil-cpp/absl/random/internal/generate_real phony/third_party/abseil-cpp/absl/random/internal/iostream_state_saver phony/third_party/abseil-cpp/absl/random/internal/uniform_helper phony/third_party/abseil-cpp/absl/random/internal/wide_multiply phony/third_party/abseil-cpp/absl/random/seed_sequences phony/third_party/abseil-cpp/absl/random/seed_gen_exception phony/third_party/abseil-cpp/absl/random/internal/pool_urbg phony/third_party/abseil-cpp/absl/random/internal/randen phony/third_party/abseil-cpp/absl/random/internal/platform phony/third_party/abseil-cpp/absl/random/internal/randen_hwaes phony/third_party/abseil-cpp/absl/random/internal/randen_hwaes_impl phony/third_party/abseil-cpp/absl/random/internal/randen_slow phony/third_party/abseil-cpp/absl/random/internal/seed_material phony/third_party/abseil-cpp/absl/random/internal/salted_seed_seq phony/third_party/abseil-cpp/absl/random/internal/nonsecure_base phony/third_party/abseil-cpp/absl/random/internal/pcg_engine phony/third_party/abseil-cpp/absl/random/internal/randen_engine phony/third_party/abseil-cpp/absl/status/status phony/third_party/abseil-cpp/absl/status/statusor
+  arflags = -T
+  output_extension = .a
+  output_dir = obj/third_party/re2

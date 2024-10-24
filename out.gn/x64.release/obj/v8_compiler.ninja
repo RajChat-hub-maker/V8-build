@@ -1,0 +1,563 @@
+defines = -DUSE_UDEV -DUSE_AURA=1 -DUSE_GLIB=1 -DUSE_OZONE=1 -D__STDC_CONSTANT_MACROS -D__STDC_FORMAT_MACROS -D_FORTIFY_SOURCE=2 -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE -D_GNU_SOURCE -DCR_CLANG_REVISION=\"llvmorg-20-init-9764-gb81d8e90-1\" -D_LIBCPP_HARDENING_MODE=_LIBCPP_HARDENING_MODE_EXTENSIVE -D_LIBCPP_DISABLE_VISIBILITY_ANNOTATIONS -D_LIBCXXABI_DISABLE_VISIBILITY_ANNOTATIONS -DCR_LIBCXX_REVISION=c8eec3629a9e1164a97a5202e40efb4ec4d148e1 -DTMP_REBUILD_HACK -DCR_SYSROOT_KEY=20230611T210420Z-2 -DNDEBUG -DNVALGRIND -DDYNAMIC_ANNOTATIONS_ENABLED=0 -DV8_TYPED_ARRAY_MAX_SIZE_IN_HEAP=64 -DENABLE_GDB_JIT_INTERFACE -DV8_INTL_SUPPORT -DV8_USE_EXTERNAL_STARTUP_DATA -DV8_ATOMIC_OBJECT_FIELD_WRITES -DV8_ENABLE_LAZY_SOURCE_POSITIONS -DV8_SHARED_RO_HEAP -DV8_WIN64_UNWINDING_INFO -DV8_ENABLE_REGEXP_INTERPRETER_THREADED_DISPATCH -DV8_ENABLE_FUZZTEST -DV8_SHORT_BUILTIN_CALLS -DV8_EXTERNAL_CODE_SPACE -DV8_ENABLE_SPARKPLUG -DV8_ENABLE_MAGLEV -DV8_ENABLE_TURBOFAN -DV8_ENABLE_WEBASSEMBLY -DV8_ENABLE_CONTINUATION_PRESERVED_EMBEDDER_DATA -DV8_ALLOCATION_FOLDING -DV8_ALLOCATION_SITE_TRACKING -DV8_ADVANCED_BIGINT_ALGORITHMS -DV8_STATIC_ROOTS -DV8_USE_ZLIB -DV8_USE_LIBM_TRIG_FUNCTIONS -DV8_ENABLE_WASM_SIMD256_REVEC -DV8_ENABLE_MAGLEV_GRAPH_PRINTER -DV8_ENABLE_BUILTIN_JUMP_TABLE_SWITCH -DV8_ENABLE_EXTENSIBLE_RO_SNAPSHOT -DV8_ENABLE_BLACK_ALLOCATED_PAGES -DV8_WASM_RANDOM_FUZZERS -DV8_ARRAY_BUFFER_INTERNAL_FIELD_COUNT=0 -DV8_ARRAY_BUFFER_VIEW_INTERNAL_FIELD_COUNT=0 -DV8_PROMISE_INTERNAL_FIELD_COUNT=0 -DV8_COMPRESS_POINTERS -DV8_COMPRESS_POINTERS_IN_SHARED_CAGE -DV8_31BIT_SMIS_ON_64BIT_ARCH -DV8_ENABLE_SANDBOX -DV8_DEPRECATION_WARNINGS -DV8_IMMINENT_DEPRECATION_WARNINGS -DV8_HAVE_TARGET_OS -DV8_TARGET_OS_LINUX -DCPPGC_CAGED_HEAP -DCPPGC_YOUNG_GENERATION -DCPPGC_POINTER_COMPRESSION -DCPPGC_ENABLE_LARGER_CAGE -DCPPGC_SLIM_WRITE_BARRIER -DV8_TARGET_ARCH_X64 -DV8_RUNTIME_CALL_STATS -DABSL_ALLOCATOR_NOTHROW=1 -DU_USING_ICU_NAMESPACE=0 -DU_ENABLE_DYLOAD=0 -DUSE_CHROMIUM_ICU=1 -DU_ENABLE_TRACING=1 -DU_ENABLE_RESOURCE_TRACING=0 -DU_STATIC_IMPLEMENTATION -DICU_UTIL_DATA_IMPL=ICU_UTIL_DATA_FILE
+include_dirs = -I../.. -Igen -I../../buildtools/third_party/libc++ -I../../include -I../../third_party/abseil-cpp -Igen/include -I../../third_party/icu/source/common -I../../third_party/icu/source/i18n -I../../third_party/fp16/src/include
+cflags = -Wall -Wextra -Wimplicit-fallthrough -Wextra-semi -Wunreachable-code-aggressive -Wthread-safety -Wno-missing-field-initializers -Wno-unused-parameter -Wno-psabi -Wloop-analysis -Wno-unneeded-internal-declaration -Wno-cast-function-type -Wno-thread-safety-reference-return -Wshadow -Werror -fno-delete-null-pointer-checks -fno-ident -fno-strict-aliasing -fstack-protector -funwind-tables -fPIC -pthread -fcolor-diagnostics -fmerge-all-constants -fno-sized-deallocation -fcrash-diagnostics-dir=../../tools/clang/crashreports -mllvm -instcombine-lower-dbg-declare=0 -mllvm -split-threshold-for-reg-with-hint=0 -ffp-contract=off -Wa,--crel,--allow-experimental-crel -fcomplete-member-pointers -m64 -msse3 -Wno-builtin-macro-redefined -D__DATE__= -D__TIME__= -D__TIMESTAMP__= -ffile-compilation-dir=. -no-canonical-prefixes -fno-omit-frame-pointer -g0 -fvisibility=hidden -Wheader-hygiene -Wstring-conversion -Wtautological-overlap-compare -Wunreachable-code -Wno-shadow -Wctad-maybe-unsupported -Wno-invalid-offsetof -Wshorten-64-to-32 -Wmissing-field-initializers -O3 -fdata-sections -ffunction-sections -fno-unique-section-names -fno-math-errno -Wexit-time-destructors
+cflags_cc = -Wno-invalid-offsetof -Wenum-compare-conditional -Wno-c++11-narrowing-const-reference -Wno-missing-template-arg-list-after-template-kw -Wno-dangling-assignment-gsl -std=c++20 -Wno-trigraphs -gsimple-template-names -fno-exceptions -fno-rtti -nostdinc++ -isystem../../third_party/libc++/src/include -isystem../../third_party/libc++abi/src/include --sysroot=../../build/linux/debian_bullseye_amd64-sysroot -fvisibility-inlines-hidden
+label_name = v8_compiler
+target_out_dir = obj
+target_output_name = v8_compiler
+
+build phony/v8_compiler.inputdeps: phony phony/generate_bytecode_builtins_list phony/run_gen-regexp-special-case phony/run_torque phony/build/chromeos_buildflags phony/src/inspector/protocol_generated_sources phony/third_party/icu/copy_icudata
+build obj/v8_compiler/access-builder.o: cxx ../../src/compiler/access-builder.cc || phony/v8_compiler.inputdeps
+  source_file_part = access-builder.cc
+  source_name_part = access-builder
+build obj/v8_compiler/access-info.o: cxx ../../src/compiler/access-info.cc || phony/v8_compiler.inputdeps
+  source_file_part = access-info.cc
+  source_name_part = access-info
+build obj/v8_compiler/add-type-assertions-reducer.o: cxx ../../src/compiler/add-type-assertions-reducer.cc || phony/v8_compiler.inputdeps
+  source_file_part = add-type-assertions-reducer.cc
+  source_name_part = add-type-assertions-reducer
+build obj/v8_compiler/all-nodes.o: cxx ../../src/compiler/all-nodes.cc || phony/v8_compiler.inputdeps
+  source_file_part = all-nodes.cc
+  source_name_part = all-nodes
+build obj/v8_compiler/bitcast-elider.o: cxx ../../src/compiler/backend/bitcast-elider.cc || phony/v8_compiler.inputdeps
+  source_file_part = bitcast-elider.cc
+  source_name_part = bitcast-elider
+build obj/v8_compiler/code-generator.o: cxx ../../src/compiler/backend/code-generator.cc || phony/v8_compiler.inputdeps
+  source_file_part = code-generator.cc
+  source_name_part = code-generator
+build obj/v8_compiler/frame-elider.o: cxx ../../src/compiler/backend/frame-elider.cc || phony/v8_compiler.inputdeps
+  source_file_part = frame-elider.cc
+  source_name_part = frame-elider
+build obj/v8_compiler/gap-resolver.o: cxx ../../src/compiler/backend/gap-resolver.cc || phony/v8_compiler.inputdeps
+  source_file_part = gap-resolver.cc
+  source_name_part = gap-resolver
+build obj/v8_compiler/instruction-scheduler.o: cxx ../../src/compiler/backend/instruction-scheduler.cc || phony/v8_compiler.inputdeps
+  source_file_part = instruction-scheduler.cc
+  source_name_part = instruction-scheduler
+build obj/v8_compiler/instruction-selector.o: cxx ../../src/compiler/backend/instruction-selector.cc || phony/v8_compiler.inputdeps
+  source_file_part = instruction-selector.cc
+  source_name_part = instruction-selector
+build obj/v8_compiler/instruction.o: cxx ../../src/compiler/backend/instruction.cc || phony/v8_compiler.inputdeps
+  source_file_part = instruction.cc
+  source_name_part = instruction
+build obj/v8_compiler/jump-threading.o: cxx ../../src/compiler/backend/jump-threading.cc || phony/v8_compiler.inputdeps
+  source_file_part = jump-threading.cc
+  source_name_part = jump-threading
+build obj/v8_compiler/move-optimizer.o: cxx ../../src/compiler/backend/move-optimizer.cc || phony/v8_compiler.inputdeps
+  source_file_part = move-optimizer.cc
+  source_name_part = move-optimizer
+build obj/v8_compiler/register-allocator-verifier.o: cxx ../../src/compiler/backend/register-allocator-verifier.cc || phony/v8_compiler.inputdeps
+  source_file_part = register-allocator-verifier.cc
+  source_name_part = register-allocator-verifier
+build obj/v8_compiler/register-allocator.o: cxx ../../src/compiler/backend/register-allocator.cc || phony/v8_compiler.inputdeps
+  source_file_part = register-allocator.cc
+  source_name_part = register-allocator
+build obj/v8_compiler/spill-placer.o: cxx ../../src/compiler/backend/spill-placer.cc || phony/v8_compiler.inputdeps
+  source_file_part = spill-placer.cc
+  source_name_part = spill-placer
+build obj/v8_compiler/basic-block-instrumentor.o: cxx ../../src/compiler/basic-block-instrumentor.cc || phony/v8_compiler.inputdeps
+  source_file_part = basic-block-instrumentor.cc
+  source_name_part = basic-block-instrumentor
+build obj/v8_compiler/branch-condition-duplicator.o: cxx ../../src/compiler/branch-condition-duplicator.cc || phony/v8_compiler.inputdeps
+  source_file_part = branch-condition-duplicator.cc
+  source_name_part = branch-condition-duplicator
+build obj/v8_compiler/branch-elimination.o: cxx ../../src/compiler/branch-elimination.cc || phony/v8_compiler.inputdeps
+  source_file_part = branch-elimination.cc
+  source_name_part = branch-elimination
+build obj/v8_compiler/bytecode-analysis.o: cxx ../../src/compiler/bytecode-analysis.cc || phony/v8_compiler.inputdeps
+  source_file_part = bytecode-analysis.cc
+  source_name_part = bytecode-analysis
+build obj/v8_compiler/bytecode-graph-builder.o: cxx ../../src/compiler/bytecode-graph-builder.cc || phony/v8_compiler.inputdeps
+  source_file_part = bytecode-graph-builder.cc
+  source_name_part = bytecode-graph-builder
+build obj/v8_compiler/bytecode-liveness-map.o: cxx ../../src/compiler/bytecode-liveness-map.cc || phony/v8_compiler.inputdeps
+  source_file_part = bytecode-liveness-map.cc
+  source_name_part = bytecode-liveness-map
+build obj/v8_compiler/c-linkage.o: cxx ../../src/compiler/c-linkage.cc || phony/v8_compiler.inputdeps
+  source_file_part = c-linkage.cc
+  source_name_part = c-linkage
+build obj/v8_compiler/checkpoint-elimination.o: cxx ../../src/compiler/checkpoint-elimination.cc || phony/v8_compiler.inputdeps
+  source_file_part = checkpoint-elimination.cc
+  source_name_part = checkpoint-elimination
+build obj/v8_compiler/code-assembler.o: cxx ../../src/compiler/code-assembler.cc || phony/v8_compiler.inputdeps
+  source_file_part = code-assembler.cc
+  source_name_part = code-assembler
+build obj/v8_compiler/common-node-cache.o: cxx ../../src/compiler/common-node-cache.cc || phony/v8_compiler.inputdeps
+  source_file_part = common-node-cache.cc
+  source_name_part = common-node-cache
+build obj/v8_compiler/common-operator-reducer.o: cxx ../../src/compiler/common-operator-reducer.cc || phony/v8_compiler.inputdeps
+  source_file_part = common-operator-reducer.cc
+  source_name_part = common-operator-reducer
+build obj/v8_compiler/common-operator.o: cxx ../../src/compiler/common-operator.cc || phony/v8_compiler.inputdeps
+  source_file_part = common-operator.cc
+  source_name_part = common-operator
+build obj/v8_compiler/compilation-dependencies.o: cxx ../../src/compiler/compilation-dependencies.cc || phony/v8_compiler.inputdeps
+  source_file_part = compilation-dependencies.cc
+  source_name_part = compilation-dependencies
+build obj/v8_compiler/compiler-source-position-table.o: cxx ../../src/compiler/compiler-source-position-table.cc || phony/v8_compiler.inputdeps
+  source_file_part = compiler-source-position-table.cc
+  source_name_part = compiler-source-position-table
+build obj/v8_compiler/const-tracking-let-helpers.o: cxx ../../src/compiler/const-tracking-let-helpers.cc || phony/v8_compiler.inputdeps
+  source_file_part = const-tracking-let-helpers.cc
+  source_name_part = const-tracking-let-helpers
+build obj/v8_compiler/constant-folding-reducer.o: cxx ../../src/compiler/constant-folding-reducer.cc || phony/v8_compiler.inputdeps
+  source_file_part = constant-folding-reducer.cc
+  source_name_part = constant-folding-reducer
+build obj/v8_compiler/control-equivalence.o: cxx ../../src/compiler/control-equivalence.cc || phony/v8_compiler.inputdeps
+  source_file_part = control-equivalence.cc
+  source_name_part = control-equivalence
+build obj/v8_compiler/csa-load-elimination.o: cxx ../../src/compiler/csa-load-elimination.cc || phony/v8_compiler.inputdeps
+  source_file_part = csa-load-elimination.cc
+  source_name_part = csa-load-elimination
+build obj/v8_compiler/dead-code-elimination.o: cxx ../../src/compiler/dead-code-elimination.cc || phony/v8_compiler.inputdeps
+  source_file_part = dead-code-elimination.cc
+  source_name_part = dead-code-elimination
+build obj/v8_compiler/decompression-optimizer.o: cxx ../../src/compiler/decompression-optimizer.cc || phony/v8_compiler.inputdeps
+  source_file_part = decompression-optimizer.cc
+  source_name_part = decompression-optimizer
+build obj/v8_compiler/escape-analysis-reducer.o: cxx ../../src/compiler/escape-analysis-reducer.cc || phony/v8_compiler.inputdeps
+  source_file_part = escape-analysis-reducer.cc
+  source_name_part = escape-analysis-reducer
+build obj/v8_compiler/escape-analysis.o: cxx ../../src/compiler/escape-analysis.cc || phony/v8_compiler.inputdeps
+  source_file_part = escape-analysis.cc
+  source_name_part = escape-analysis
+build obj/v8_compiler/fast-api-calls.o: cxx ../../src/compiler/fast-api-calls.cc || phony/v8_compiler.inputdeps
+  source_file_part = fast-api-calls.cc
+  source_name_part = fast-api-calls
+build obj/v8_compiler/feedback-source.o: cxx ../../src/compiler/feedback-source.cc || phony/v8_compiler.inputdeps
+  source_file_part = feedback-source.cc
+  source_name_part = feedback-source
+build obj/v8_compiler/frame-states.o: cxx ../../src/compiler/frame-states.cc || phony/v8_compiler.inputdeps
+  source_file_part = frame-states.cc
+  source_name_part = frame-states
+build obj/v8_compiler/frame.o: cxx ../../src/compiler/frame.cc || phony/v8_compiler.inputdeps
+  source_file_part = frame.cc
+  source_name_part = frame
+build obj/v8_compiler/graph-assembler.o: cxx ../../src/compiler/graph-assembler.cc || phony/v8_compiler.inputdeps
+  source_file_part = graph-assembler.cc
+  source_name_part = graph-assembler
+build obj/v8_compiler/graph-reducer.o: cxx ../../src/compiler/graph-reducer.cc || phony/v8_compiler.inputdeps
+  source_file_part = graph-reducer.cc
+  source_name_part = graph-reducer
+build obj/v8_compiler/graph-trimmer.o: cxx ../../src/compiler/graph-trimmer.cc || phony/v8_compiler.inputdeps
+  source_file_part = graph-trimmer.cc
+  source_name_part = graph-trimmer
+build obj/v8_compiler/heap-refs.o: cxx ../../src/compiler/heap-refs.cc || phony/v8_compiler.inputdeps
+  source_file_part = heap-refs.cc
+  source_name_part = heap-refs
+build obj/v8_compiler/js-call-reducer.o: cxx ../../src/compiler/js-call-reducer.cc || phony/v8_compiler.inputdeps
+  source_file_part = js-call-reducer.cc
+  source_name_part = js-call-reducer
+build obj/v8_compiler/js-context-specialization.o: cxx ../../src/compiler/js-context-specialization.cc || phony/v8_compiler.inputdeps
+  source_file_part = js-context-specialization.cc
+  source_name_part = js-context-specialization
+build obj/v8_compiler/js-create-lowering.o: cxx ../../src/compiler/js-create-lowering.cc || phony/v8_compiler.inputdeps
+  source_file_part = js-create-lowering.cc
+  source_name_part = js-create-lowering
+build obj/v8_compiler/js-generic-lowering.o: cxx ../../src/compiler/js-generic-lowering.cc || phony/v8_compiler.inputdeps
+  source_file_part = js-generic-lowering.cc
+  source_name_part = js-generic-lowering
+build obj/v8_compiler/js-graph.o: cxx ../../src/compiler/js-graph.cc || phony/v8_compiler.inputdeps
+  source_file_part = js-graph.cc
+  source_name_part = js-graph
+build obj/v8_compiler/js-heap-broker.o: cxx ../../src/compiler/js-heap-broker.cc || phony/v8_compiler.inputdeps
+  source_file_part = js-heap-broker.cc
+  source_name_part = js-heap-broker
+build obj/v8_compiler/js-inlining-heuristic.o: cxx ../../src/compiler/js-inlining-heuristic.cc || phony/v8_compiler.inputdeps
+  source_file_part = js-inlining-heuristic.cc
+  source_name_part = js-inlining-heuristic
+build obj/v8_compiler/js-inlining.o: cxx ../../src/compiler/js-inlining.cc || phony/v8_compiler.inputdeps
+  source_file_part = js-inlining.cc
+  source_name_part = js-inlining
+build obj/v8_compiler/js-intrinsic-lowering.o: cxx ../../src/compiler/js-intrinsic-lowering.cc || phony/v8_compiler.inputdeps
+  source_file_part = js-intrinsic-lowering.cc
+  source_name_part = js-intrinsic-lowering
+build obj/v8_compiler/js-native-context-specialization.o: cxx ../../src/compiler/js-native-context-specialization.cc || phony/v8_compiler.inputdeps
+  source_file_part = js-native-context-specialization.cc
+  source_name_part = js-native-context-specialization
+build obj/v8_compiler/js-operator.o: cxx ../../src/compiler/js-operator.cc || phony/v8_compiler.inputdeps
+  source_file_part = js-operator.cc
+  source_name_part = js-operator
+build obj/v8_compiler/js-type-hint-lowering.o: cxx ../../src/compiler/js-type-hint-lowering.cc || phony/v8_compiler.inputdeps
+  source_file_part = js-type-hint-lowering.cc
+  source_name_part = js-type-hint-lowering
+build obj/v8_compiler/js-typed-lowering.o: cxx ../../src/compiler/js-typed-lowering.cc || phony/v8_compiler.inputdeps
+  source_file_part = js-typed-lowering.cc
+  source_name_part = js-typed-lowering
+build obj/v8_compiler/late-escape-analysis.o: cxx ../../src/compiler/late-escape-analysis.cc || phony/v8_compiler.inputdeps
+  source_file_part = late-escape-analysis.cc
+  source_name_part = late-escape-analysis
+build obj/v8_compiler/linkage.o: cxx ../../src/compiler/linkage.cc || phony/v8_compiler.inputdeps
+  source_file_part = linkage.cc
+  source_name_part = linkage
+build obj/v8_compiler/load-elimination.o: cxx ../../src/compiler/load-elimination.cc || phony/v8_compiler.inputdeps
+  source_file_part = load-elimination.cc
+  source_name_part = load-elimination
+build obj/v8_compiler/loop-analysis.o: cxx ../../src/compiler/loop-analysis.cc || phony/v8_compiler.inputdeps
+  source_file_part = loop-analysis.cc
+  source_name_part = loop-analysis
+build obj/v8_compiler/loop-peeling.o: cxx ../../src/compiler/loop-peeling.cc || phony/v8_compiler.inputdeps
+  source_file_part = loop-peeling.cc
+  source_name_part = loop-peeling
+build obj/v8_compiler/loop-unrolling.o: cxx ../../src/compiler/loop-unrolling.cc || phony/v8_compiler.inputdeps
+  source_file_part = loop-unrolling.cc
+  source_name_part = loop-unrolling
+build obj/v8_compiler/loop-variable-optimizer.o: cxx ../../src/compiler/loop-variable-optimizer.cc || phony/v8_compiler.inputdeps
+  source_file_part = loop-variable-optimizer.cc
+  source_name_part = loop-variable-optimizer
+build obj/v8_compiler/machine-graph-verifier.o: cxx ../../src/compiler/machine-graph-verifier.cc || phony/v8_compiler.inputdeps
+  source_file_part = machine-graph-verifier.cc
+  source_name_part = machine-graph-verifier
+build obj/v8_compiler/machine-graph.o: cxx ../../src/compiler/machine-graph.cc || phony/v8_compiler.inputdeps
+  source_file_part = machine-graph.cc
+  source_name_part = machine-graph
+build obj/v8_compiler/machine-operator-reducer.o: cxx ../../src/compiler/machine-operator-reducer.cc || phony/v8_compiler.inputdeps
+  source_file_part = machine-operator-reducer.cc
+  source_name_part = machine-operator-reducer
+build obj/v8_compiler/machine-operator.o: cxx ../../src/compiler/machine-operator.cc || phony/v8_compiler.inputdeps
+  source_file_part = machine-operator.cc
+  source_name_part = machine-operator
+build obj/v8_compiler/map-inference.o: cxx ../../src/compiler/map-inference.cc || phony/v8_compiler.inputdeps
+  source_file_part = map-inference.cc
+  source_name_part = map-inference
+build obj/v8_compiler/memory-lowering.o: cxx ../../src/compiler/memory-lowering.cc || phony/v8_compiler.inputdeps
+  source_file_part = memory-lowering.cc
+  source_name_part = memory-lowering
+build obj/v8_compiler/memory-optimizer.o: cxx ../../src/compiler/memory-optimizer.cc || phony/v8_compiler.inputdeps
+  source_file_part = memory-optimizer.cc
+  source_name_part = memory-optimizer
+build obj/v8_compiler/node-marker.o: cxx ../../src/compiler/node-marker.cc || phony/v8_compiler.inputdeps
+  source_file_part = node-marker.cc
+  source_name_part = node-marker
+build obj/v8_compiler/node-matchers.o: cxx ../../src/compiler/node-matchers.cc || phony/v8_compiler.inputdeps
+  source_file_part = node-matchers.cc
+  source_name_part = node-matchers
+build obj/v8_compiler/node-observer.o: cxx ../../src/compiler/node-observer.cc || phony/v8_compiler.inputdeps
+  source_file_part = node-observer.cc
+  source_name_part = node-observer
+build obj/v8_compiler/node-origin-table.o: cxx ../../src/compiler/node-origin-table.cc || phony/v8_compiler.inputdeps
+  source_file_part = node-origin-table.cc
+  source_name_part = node-origin-table
+build obj/v8_compiler/node-properties.o: cxx ../../src/compiler/node-properties.cc || phony/v8_compiler.inputdeps
+  source_file_part = node-properties.cc
+  source_name_part = node-properties
+build obj/v8_compiler/node.o: cxx ../../src/compiler/node.cc || phony/v8_compiler.inputdeps
+  source_file_part = node.cc
+  source_name_part = node
+build obj/v8_compiler/opcodes.o: cxx ../../src/compiler/opcodes.cc || phony/v8_compiler.inputdeps
+  source_file_part = opcodes.cc
+  source_name_part = opcodes
+build obj/v8_compiler/operation-typer.o: cxx ../../src/compiler/operation-typer.cc || phony/v8_compiler.inputdeps
+  source_file_part = operation-typer.cc
+  source_name_part = operation-typer
+build obj/v8_compiler/operator-properties.o: cxx ../../src/compiler/operator-properties.cc || phony/v8_compiler.inputdeps
+  source_file_part = operator-properties.cc
+  source_name_part = operator-properties
+build obj/v8_compiler/operator.o: cxx ../../src/compiler/operator.cc || phony/v8_compiler.inputdeps
+  source_file_part = operator.cc
+  source_name_part = operator
+build obj/v8_compiler/osr.o: cxx ../../src/compiler/osr.cc || phony/v8_compiler.inputdeps
+  source_file_part = osr.cc
+  source_name_part = osr
+build obj/v8_compiler/pair-load-store-reducer.o: cxx ../../src/compiler/pair-load-store-reducer.cc || phony/v8_compiler.inputdeps
+  source_file_part = pair-load-store-reducer.cc
+  source_name_part = pair-load-store-reducer
+build obj/v8_compiler/pipeline-statistics.o: cxx ../../src/compiler/pipeline-statistics.cc || phony/v8_compiler.inputdeps
+  source_file_part = pipeline-statistics.cc
+  source_name_part = pipeline-statistics
+build obj/v8_compiler/pipeline.o: cxx ../../src/compiler/pipeline.cc || phony/v8_compiler.inputdeps
+  source_file_part = pipeline.cc
+  source_name_part = pipeline
+build obj/v8_compiler/property-access-builder.o: cxx ../../src/compiler/property-access-builder.cc || phony/v8_compiler.inputdeps
+  source_file_part = property-access-builder.cc
+  source_name_part = property-access-builder
+build obj/v8_compiler/raw-machine-assembler.o: cxx ../../src/compiler/raw-machine-assembler.cc || phony/v8_compiler.inputdeps
+  source_file_part = raw-machine-assembler.cc
+  source_name_part = raw-machine-assembler
+build obj/v8_compiler/redundancy-elimination.o: cxx ../../src/compiler/redundancy-elimination.cc || phony/v8_compiler.inputdeps
+  source_file_part = redundancy-elimination.cc
+  source_name_part = redundancy-elimination
+build obj/v8_compiler/refs-map.o: cxx ../../src/compiler/refs-map.cc || phony/v8_compiler.inputdeps
+  source_file_part = refs-map.cc
+  source_name_part = refs-map
+build obj/v8_compiler/representation-change.o: cxx ../../src/compiler/representation-change.cc || phony/v8_compiler.inputdeps
+  source_file_part = representation-change.cc
+  source_name_part = representation-change
+build obj/v8_compiler/schedule.o: cxx ../../src/compiler/schedule.cc || phony/v8_compiler.inputdeps
+  source_file_part = schedule.cc
+  source_name_part = schedule
+build obj/v8_compiler/scheduler.o: cxx ../../src/compiler/scheduler.cc || phony/v8_compiler.inputdeps
+  source_file_part = scheduler.cc
+  source_name_part = scheduler
+build obj/v8_compiler/select-lowering.o: cxx ../../src/compiler/select-lowering.cc || phony/v8_compiler.inputdeps
+  source_file_part = select-lowering.cc
+  source_name_part = select-lowering
+build obj/v8_compiler/simplified-lowering-verifier.o: cxx ../../src/compiler/simplified-lowering-verifier.cc || phony/v8_compiler.inputdeps
+  source_file_part = simplified-lowering-verifier.cc
+  source_name_part = simplified-lowering-verifier
+build obj/v8_compiler/simplified-lowering.o: cxx ../../src/compiler/simplified-lowering.cc || phony/v8_compiler.inputdeps
+  source_file_part = simplified-lowering.cc
+  source_name_part = simplified-lowering
+build obj/v8_compiler/simplified-operator-reducer.o: cxx ../../src/compiler/simplified-operator-reducer.cc || phony/v8_compiler.inputdeps
+  source_file_part = simplified-operator-reducer.cc
+  source_name_part = simplified-operator-reducer
+build obj/v8_compiler/simplified-operator.o: cxx ../../src/compiler/simplified-operator.cc || phony/v8_compiler.inputdeps
+  source_file_part = simplified-operator.cc
+  source_name_part = simplified-operator
+build obj/v8_compiler/state-values-utils.o: cxx ../../src/compiler/state-values-utils.cc || phony/v8_compiler.inputdeps
+  source_file_part = state-values-utils.cc
+  source_name_part = state-values-utils
+build obj/v8_compiler/string-builder-optimizer.o: cxx ../../src/compiler/string-builder-optimizer.cc || phony/v8_compiler.inputdeps
+  source_file_part = string-builder-optimizer.cc
+  source_name_part = string-builder-optimizer
+build obj/v8_compiler/turbofan-enabled.o: cxx ../../src/compiler/turbofan-enabled.cc || phony/v8_compiler.inputdeps
+  source_file_part = turbofan-enabled.cc
+  source_name_part = turbofan-enabled
+build obj/v8_compiler/turbofan-graph-visualizer.o: cxx ../../src/compiler/turbofan-graph-visualizer.cc || phony/v8_compiler.inputdeps
+  source_file_part = turbofan-graph-visualizer.cc
+  source_name_part = turbofan-graph-visualizer
+build obj/v8_compiler/turbofan-graph.o: cxx ../../src/compiler/turbofan-graph.cc || phony/v8_compiler.inputdeps
+  source_file_part = turbofan-graph.cc
+  source_name_part = turbofan-graph
+build obj/v8_compiler/turbofan-typer.o: cxx ../../src/compiler/turbofan-typer.cc || phony/v8_compiler.inputdeps
+  source_file_part = turbofan-typer.cc
+  source_name_part = turbofan-typer
+build obj/v8_compiler/turbofan-types.o: cxx ../../src/compiler/turbofan-types.cc || phony/v8_compiler.inputdeps
+  source_file_part = turbofan-types.cc
+  source_name_part = turbofan-types
+build obj/v8_compiler/analyzer-iterator.o: cxx ../../src/compiler/turboshaft/analyzer-iterator.cc || phony/v8_compiler.inputdeps
+  source_file_part = analyzer-iterator.cc
+  source_name_part = analyzer-iterator
+build obj/v8_compiler/assembler.o: cxx ../../src/compiler/turboshaft/assembler.cc || phony/v8_compiler.inputdeps
+  source_file_part = assembler.cc
+  source_name_part = assembler
+build obj/v8_compiler/block-instrumentation-phase.o: cxx ../../src/compiler/turboshaft/block-instrumentation-phase.cc || phony/v8_compiler.inputdeps
+  source_file_part = block-instrumentation-phase.cc
+  source_name_part = block-instrumentation-phase
+build obj/v8_compiler/block-instrumentation-reducer.o: cxx ../../src/compiler/turboshaft/block-instrumentation-reducer.cc || phony/v8_compiler.inputdeps
+  source_file_part = block-instrumentation-reducer.cc
+  source_name_part = block-instrumentation-reducer
+build obj/v8_compiler/build-graph-phase.o: cxx ../../src/compiler/turboshaft/build-graph-phase.cc || phony/v8_compiler.inputdeps
+  source_file_part = build-graph-phase.cc
+  source_name_part = build-graph-phase
+build obj/v8_compiler/code-elimination-and-simplification-phase.o: cxx ../../src/compiler/turboshaft/code-elimination-and-simplification-phase.cc || phony/v8_compiler.inputdeps
+  source_file_part = code-elimination-and-simplification-phase.cc
+  source_name_part = code-elimination-and-simplification-phase
+build obj/v8_compiler/copying-phase.o: cxx ../../src/compiler/turboshaft/copying-phase.cc || phony/v8_compiler.inputdeps
+  source_file_part = copying-phase.cc
+  source_name_part = copying-phase
+build obj/v8_compiler/csa-optimize-phase.o: cxx ../../src/compiler/turboshaft/csa-optimize-phase.cc || phony/v8_compiler.inputdeps
+  source_file_part = csa-optimize-phase.cc
+  source_name_part = csa-optimize-phase
+build obj/v8_compiler/debug-feature-lowering-phase.o: cxx ../../src/compiler/turboshaft/debug-feature-lowering-phase.cc || phony/v8_compiler.inputdeps
+  source_file_part = debug-feature-lowering-phase.cc
+  source_name_part = debug-feature-lowering-phase
+build obj/v8_compiler/decompression-optimization-phase.o: cxx ../../src/compiler/turboshaft/decompression-optimization-phase.cc || phony/v8_compiler.inputdeps
+  source_file_part = decompression-optimization-phase.cc
+  source_name_part = decompression-optimization-phase
+build obj/v8_compiler/decompression-optimization.o: cxx ../../src/compiler/turboshaft/decompression-optimization.cc || phony/v8_compiler.inputdeps
+  source_file_part = decompression-optimization.cc
+  source_name_part = decompression-optimization
+build obj/v8_compiler/graph-builder.o: cxx ../../src/compiler/turboshaft/graph-builder.cc || phony/v8_compiler.inputdeps
+  source_file_part = graph-builder.cc
+  source_name_part = graph-builder
+build obj/v8_compiler/graph-visualizer.o: cxx ../../src/compiler/turboshaft/graph-visualizer.cc || phony/v8_compiler.inputdeps
+  source_file_part = graph-visualizer.cc
+  source_name_part = graph-visualizer
+build obj/v8_compiler/graph.o: cxx ../../src/compiler/turboshaft/graph.cc || phony/v8_compiler.inputdeps
+  source_file_part = graph.cc
+  source_name_part = graph
+build obj/v8_compiler/instruction-selection-phase.o: cxx ../../src/compiler/turboshaft/instruction-selection-phase.cc || phony/v8_compiler.inputdeps
+  source_file_part = instruction-selection-phase.cc
+  source_name_part = instruction-selection-phase
+build obj/v8_compiler/late-escape-analysis-reducer.o: cxx ../../src/compiler/turboshaft/late-escape-analysis-reducer.cc || phony/v8_compiler.inputdeps
+  source_file_part = late-escape-analysis-reducer.cc
+  source_name_part = late-escape-analysis-reducer
+build obj/v8_compiler/late-load-elimination-reducer.o: cxx ../../src/compiler/turboshaft/late-load-elimination-reducer.cc || phony/v8_compiler.inputdeps
+  source_file_part = late-load-elimination-reducer.cc
+  source_name_part = late-load-elimination-reducer
+build obj/v8_compiler/loop-finder.o: cxx ../../src/compiler/turboshaft/loop-finder.cc || phony/v8_compiler.inputdeps
+  source_file_part = loop-finder.cc
+  source_name_part = loop-finder
+build obj/v8_compiler/loop-peeling-phase.o: cxx ../../src/compiler/turboshaft/loop-peeling-phase.cc || phony/v8_compiler.inputdeps
+  source_file_part = loop-peeling-phase.cc
+  source_name_part = loop-peeling-phase
+build obj/v8_compiler/loop-unrolling-phase.o: cxx ../../src/compiler/turboshaft/loop-unrolling-phase.cc || phony/v8_compiler.inputdeps
+  source_file_part = loop-unrolling-phase.cc
+  source_name_part = loop-unrolling-phase
+build obj/v8_compiler/loop-unrolling-reducer.o: cxx ../../src/compiler/turboshaft/loop-unrolling-reducer.cc || phony/v8_compiler.inputdeps
+  source_file_part = loop-unrolling-reducer.cc
+  source_name_part = loop-unrolling-reducer
+build obj/v8_compiler/machine-lowering-phase.o: cxx ../../src/compiler/turboshaft/machine-lowering-phase.cc || phony/v8_compiler.inputdeps
+  source_file_part = machine-lowering-phase.cc
+  source_name_part = machine-lowering-phase
+build obj/v8_compiler/maglev-graph-building-phase.o: cxx ../../src/compiler/turboshaft/maglev-graph-building-phase.cc || phony/v8_compiler.inputdeps
+  source_file_part = maglev-graph-building-phase.cc
+  source_name_part = maglev-graph-building-phase
+build obj/v8_compiler/memory-optimization-reducer.o: cxx ../../src/compiler/turboshaft/memory-optimization-reducer.cc || phony/v8_compiler.inputdeps
+  source_file_part = memory-optimization-reducer.cc
+  source_name_part = memory-optimization-reducer
+build obj/v8_compiler/operations.o: cxx ../../src/compiler/turboshaft/operations.cc || phony/v8_compiler.inputdeps
+  source_file_part = operations.cc
+  source_name_part = operations
+build obj/v8_compiler/optimize-phase.o: cxx ../../src/compiler/turboshaft/optimize-phase.cc || phony/v8_compiler.inputdeps
+  source_file_part = optimize-phase.cc
+  source_name_part = optimize-phase
+build obj/v8_compiler/phase.o: cxx ../../src/compiler/turboshaft/phase.cc || phony/v8_compiler.inputdeps
+  source_file_part = phase.cc
+  source_name_part = phase
+build obj/v8_compiler/pipelines.o: cxx ../../src/compiler/turboshaft/pipelines.cc || phony/v8_compiler.inputdeps
+  source_file_part = pipelines.cc
+  source_name_part = pipelines
+build obj/v8_compiler/pretenuring-propagation-reducer.o: cxx ../../src/compiler/turboshaft/pretenuring-propagation-reducer.cc || phony/v8_compiler.inputdeps
+  source_file_part = pretenuring-propagation-reducer.cc
+  source_name_part = pretenuring-propagation-reducer
+build obj/v8_compiler/recreate-schedule-phase.o: cxx ../../src/compiler/turboshaft/recreate-schedule-phase.cc || phony/v8_compiler.inputdeps
+  source_file_part = recreate-schedule-phase.cc
+  source_name_part = recreate-schedule-phase
+build obj/v8_compiler/recreate-schedule.o: cxx ../../src/compiler/turboshaft/recreate-schedule.cc || phony/v8_compiler.inputdeps
+  source_file_part = recreate-schedule.cc
+  source_name_part = recreate-schedule
+build obj/v8_compiler/representations.o: cxx ../../src/compiler/turboshaft/representations.cc || phony/v8_compiler.inputdeps
+  source_file_part = representations.cc
+  source_name_part = representations
+build obj/v8_compiler/sidetable.o: cxx ../../src/compiler/turboshaft/sidetable.cc || phony/v8_compiler.inputdeps
+  source_file_part = sidetable.cc
+  source_name_part = sidetable
+build obj/v8_compiler/simplify-tf-loops.o: cxx ../../src/compiler/turboshaft/simplify-tf-loops.cc || phony/v8_compiler.inputdeps
+  source_file_part = simplify-tf-loops.cc
+  source_name_part = simplify-tf-loops
+build obj/v8_compiler/store-store-elimination-phase.o: cxx ../../src/compiler/turboshaft/store-store-elimination-phase.cc || phony/v8_compiler.inputdeps
+  source_file_part = store-store-elimination-phase.cc
+  source_name_part = store-store-elimination-phase
+build obj/v8_compiler/type-assertions-phase.o: cxx ../../src/compiler/turboshaft/type-assertions-phase.cc || phony/v8_compiler.inputdeps
+  source_file_part = type-assertions-phase.cc
+  source_name_part = type-assertions-phase
+build obj/v8_compiler/type-parser.o: cxx ../../src/compiler/turboshaft/type-parser.cc || phony/v8_compiler.inputdeps
+  source_file_part = type-parser.cc
+  source_name_part = type-parser
+build obj/v8_compiler/typed-optimizations-phase.o: cxx ../../src/compiler/turboshaft/typed-optimizations-phase.cc || phony/v8_compiler.inputdeps
+  source_file_part = typed-optimizations-phase.cc
+  source_name_part = typed-optimizations-phase
+build obj/v8_compiler/typer.o: cxx ../../src/compiler/turboshaft/typer.cc || phony/v8_compiler.inputdeps
+  source_file_part = typer.cc
+  source_name_part = typer
+build obj/v8_compiler/types.o: cxx ../../src/compiler/turboshaft/types.cc || phony/v8_compiler.inputdeps
+  source_file_part = types.cc
+  source_name_part = types
+build obj/v8_compiler/use-map.o: cxx ../../src/compiler/turboshaft/use-map.cc || phony/v8_compiler.inputdeps
+  source_file_part = use-map.cc
+  source_name_part = use-map
+build obj/v8_compiler/utils.o: cxx ../../src/compiler/turboshaft/utils.cc || phony/v8_compiler.inputdeps
+  source_file_part = utils.cc
+  source_name_part = utils
+build obj/v8_compiler/type-cache.o: cxx ../../src/compiler/type-cache.cc || phony/v8_compiler.inputdeps
+  source_file_part = type-cache.cc
+  source_name_part = type-cache
+build obj/v8_compiler/type-narrowing-reducer.o: cxx ../../src/compiler/type-narrowing-reducer.cc || phony/v8_compiler.inputdeps
+  source_file_part = type-narrowing-reducer.cc
+  source_name_part = type-narrowing-reducer
+build obj/v8_compiler/typed-optimization.o: cxx ../../src/compiler/typed-optimization.cc || phony/v8_compiler.inputdeps
+  source_file_part = typed-optimization.cc
+  source_name_part = typed-optimization
+build obj/v8_compiler/value-numbering-reducer.o: cxx ../../src/compiler/value-numbering-reducer.cc || phony/v8_compiler.inputdeps
+  source_file_part = value-numbering-reducer.cc
+  source_name_part = value-numbering-reducer
+build obj/v8_compiler/verifier.o: cxx ../../src/compiler/verifier.cc || phony/v8_compiler.inputdeps
+  source_file_part = verifier.cc
+  source_name_part = verifier
+build obj/v8_compiler/zone-stats.o: cxx ../../src/compiler/zone-stats.cc || phony/v8_compiler.inputdeps
+  source_file_part = zone-stats.cc
+  source_name_part = zone-stats
+build obj/v8_compiler/code-generator-x64.o: cxx ../../src/compiler/backend/x64/code-generator-x64.cc || phony/v8_compiler.inputdeps
+  source_file_part = code-generator-x64.cc
+  source_name_part = code-generator-x64
+build obj/v8_compiler/instruction-scheduler-x64.o: cxx ../../src/compiler/backend/x64/instruction-scheduler-x64.cc || phony/v8_compiler.inputdeps
+  source_file_part = instruction-scheduler-x64.cc
+  source_name_part = instruction-scheduler-x64
+build obj/v8_compiler/instruction-selector-x64.o: cxx ../../src/compiler/backend/x64/instruction-selector-x64.cc || phony/v8_compiler.inputdeps
+  source_file_part = instruction-selector-x64.cc
+  source_name_part = instruction-selector-x64
+build obj/v8_compiler/unwinding-info-writer-x64.o: cxx ../../src/compiler/backend/x64/unwinding-info-writer-x64.cc || phony/v8_compiler.inputdeps
+  source_file_part = unwinding-info-writer-x64.cc
+  source_name_part = unwinding-info-writer-x64
+build obj/v8_compiler/int64-lowering.o: cxx ../../src/compiler/int64-lowering.cc || phony/v8_compiler.inputdeps
+  source_file_part = int64-lowering.cc
+  source_name_part = int64-lowering
+build obj/v8_compiler/int64-lowering-phase.o: cxx ../../src/compiler/turboshaft/int64-lowering-phase.cc || phony/v8_compiler.inputdeps
+  source_file_part = int64-lowering-phase.cc
+  source_name_part = int64-lowering-phase
+build obj/v8_compiler/wasm-gc-optimize-phase.o: cxx ../../src/compiler/turboshaft/wasm-gc-optimize-phase.cc || phony/v8_compiler.inputdeps
+  source_file_part = wasm-gc-optimize-phase.cc
+  source_name_part = wasm-gc-optimize-phase
+build obj/v8_compiler/wasm-gc-typed-optimization-reducer.o: cxx ../../src/compiler/turboshaft/wasm-gc-typed-optimization-reducer.cc || phony/v8_compiler.inputdeps
+  source_file_part = wasm-gc-typed-optimization-reducer.cc
+  source_name_part = wasm-gc-typed-optimization-reducer
+build obj/v8_compiler/wasm-in-js-inlining-phase.o: cxx ../../src/compiler/turboshaft/wasm-in-js-inlining-phase.cc || phony/v8_compiler.inputdeps
+  source_file_part = wasm-in-js-inlining-phase.cc
+  source_name_part = wasm-in-js-inlining-phase
+build obj/v8_compiler/wasm-lowering-phase.o: cxx ../../src/compiler/turboshaft/wasm-lowering-phase.cc || phony/v8_compiler.inputdeps
+  source_file_part = wasm-lowering-phase.cc
+  source_name_part = wasm-lowering-phase
+build obj/v8_compiler/wasm-optimize-phase.o: cxx ../../src/compiler/turboshaft/wasm-optimize-phase.cc || phony/v8_compiler.inputdeps
+  source_file_part = wasm-optimize-phase.cc
+  source_name_part = wasm-optimize-phase
+build obj/v8_compiler/wasm-turboshaft-compiler.o: cxx ../../src/compiler/turboshaft/wasm-turboshaft-compiler.cc || phony/v8_compiler.inputdeps
+  source_file_part = wasm-turboshaft-compiler.cc
+  source_name_part = wasm-turboshaft-compiler
+build obj/v8_compiler/wasm-address-reassociation.o: cxx ../../src/compiler/wasm-address-reassociation.cc || phony/v8_compiler.inputdeps
+  source_file_part = wasm-address-reassociation.cc
+  source_name_part = wasm-address-reassociation
+build obj/v8_compiler/wasm-call-descriptors.o: cxx ../../src/compiler/wasm-call-descriptors.cc || phony/v8_compiler.inputdeps
+  source_file_part = wasm-call-descriptors.cc
+  source_name_part = wasm-call-descriptors
+build obj/v8_compiler/wasm-compiler-definitions.o: cxx ../../src/compiler/wasm-compiler-definitions.cc || phony/v8_compiler.inputdeps
+  source_file_part = wasm-compiler-definitions.cc
+  source_name_part = wasm-compiler-definitions
+build obj/v8_compiler/wasm-compiler.o: cxx ../../src/compiler/wasm-compiler.cc || phony/v8_compiler.inputdeps
+  source_file_part = wasm-compiler.cc
+  source_name_part = wasm-compiler
+build obj/v8_compiler/wasm-escape-analysis.o: cxx ../../src/compiler/wasm-escape-analysis.cc || phony/v8_compiler.inputdeps
+  source_file_part = wasm-escape-analysis.cc
+  source_name_part = wasm-escape-analysis
+build obj/v8_compiler/wasm-gc-lowering.o: cxx ../../src/compiler/wasm-gc-lowering.cc || phony/v8_compiler.inputdeps
+  source_file_part = wasm-gc-lowering.cc
+  source_name_part = wasm-gc-lowering
+build obj/v8_compiler/wasm-gc-operator-reducer.o: cxx ../../src/compiler/wasm-gc-operator-reducer.cc || phony/v8_compiler.inputdeps
+  source_file_part = wasm-gc-operator-reducer.cc
+  source_name_part = wasm-gc-operator-reducer
+build obj/v8_compiler/wasm-graph-assembler.o: cxx ../../src/compiler/wasm-graph-assembler.cc || phony/v8_compiler.inputdeps
+  source_file_part = wasm-graph-assembler.cc
+  source_name_part = wasm-graph-assembler
+build obj/v8_compiler/wasm-inlining-into-js.o: cxx ../../src/compiler/wasm-inlining-into-js.cc || phony/v8_compiler.inputdeps
+  source_file_part = wasm-inlining-into-js.cc
+  source_name_part = wasm-inlining-into-js
+build obj/v8_compiler/wasm-inlining.o: cxx ../../src/compiler/wasm-inlining.cc || phony/v8_compiler.inputdeps
+  source_file_part = wasm-inlining.cc
+  source_name_part = wasm-inlining
+build obj/v8_compiler/wasm-js-lowering.o: cxx ../../src/compiler/wasm-js-lowering.cc || phony/v8_compiler.inputdeps
+  source_file_part = wasm-js-lowering.cc
+  source_name_part = wasm-js-lowering
+build obj/v8_compiler/wasm-load-elimination.o: cxx ../../src/compiler/wasm-load-elimination.cc || phony/v8_compiler.inputdeps
+  source_file_part = wasm-load-elimination.cc
+  source_name_part = wasm-load-elimination
+build obj/v8_compiler/wasm-loop-peeling.o: cxx ../../src/compiler/wasm-loop-peeling.cc || phony/v8_compiler.inputdeps
+  source_file_part = wasm-loop-peeling.cc
+  source_name_part = wasm-loop-peeling
+build obj/v8_compiler/wasm-typer.o: cxx ../../src/compiler/wasm-typer.cc || phony/v8_compiler.inputdeps
+  source_file_part = wasm-typer.cc
+  source_name_part = wasm-typer
+build obj/v8_compiler/linear-scheduler.o: cxx ../../src/compiler/linear-scheduler.cc || phony/v8_compiler.inputdeps
+  source_file_part = linear-scheduler.cc
+  source_name_part = linear-scheduler
+build obj/v8_compiler/revectorizer.o: cxx ../../src/compiler/revectorizer.cc || phony/v8_compiler.inputdeps
+  source_file_part = revectorizer.cc
+  source_name_part = revectorizer
+build obj/v8_compiler/wasm-revec-phase.o: cxx ../../src/compiler/turboshaft/wasm-revec-phase.cc || phony/v8_compiler.inputdeps
+  source_file_part = wasm-revec-phase.cc
+  source_name_part = wasm-revec-phase
+build obj/v8_compiler/wasm-revec-reducer.o: cxx ../../src/compiler/turboshaft/wasm-revec-reducer.cc || phony/v8_compiler.inputdeps
+  source_file_part = wasm-revec-reducer.cc
+  source_name_part = wasm-revec-reducer
+
+build phony/v8_compiler: phony obj/v8_compiler/access-builder.o obj/v8_compiler/access-info.o obj/v8_compiler/add-type-assertions-reducer.o obj/v8_compiler/all-nodes.o obj/v8_compiler/bitcast-elider.o obj/v8_compiler/code-generator.o obj/v8_compiler/frame-elider.o obj/v8_compiler/gap-resolver.o obj/v8_compiler/instruction-scheduler.o obj/v8_compiler/instruction-selector.o obj/v8_compiler/instruction.o obj/v8_compiler/jump-threading.o obj/v8_compiler/move-optimizer.o obj/v8_compiler/register-allocator-verifier.o obj/v8_compiler/register-allocator.o obj/v8_compiler/spill-placer.o obj/v8_compiler/basic-block-instrumentor.o obj/v8_compiler/branch-condition-duplicator.o obj/v8_compiler/branch-elimination.o obj/v8_compiler/bytecode-analysis.o obj/v8_compiler/bytecode-graph-builder.o obj/v8_compiler/bytecode-liveness-map.o obj/v8_compiler/c-linkage.o obj/v8_compiler/checkpoint-elimination.o obj/v8_compiler/code-assembler.o obj/v8_compiler/common-node-cache.o obj/v8_compiler/common-operator-reducer.o obj/v8_compiler/common-operator.o obj/v8_compiler/compilation-dependencies.o obj/v8_compiler/compiler-source-position-table.o obj/v8_compiler/const-tracking-let-helpers.o obj/v8_compiler/constant-folding-reducer.o obj/v8_compiler/control-equivalence.o obj/v8_compiler/csa-load-elimination.o obj/v8_compiler/dead-code-elimination.o obj/v8_compiler/decompression-optimizer.o obj/v8_compiler/escape-analysis-reducer.o obj/v8_compiler/escape-analysis.o obj/v8_compiler/fast-api-calls.o obj/v8_compiler/feedback-source.o obj/v8_compiler/frame-states.o obj/v8_compiler/frame.o obj/v8_compiler/graph-assembler.o obj/v8_compiler/graph-reducer.o obj/v8_compiler/graph-trimmer.o obj/v8_compiler/heap-refs.o obj/v8_compiler/js-call-reducer.o obj/v8_compiler/js-context-specialization.o obj/v8_compiler/js-create-lowering.o obj/v8_compiler/js-generic-lowering.o obj/v8_compiler/js-graph.o obj/v8_compiler/js-heap-broker.o obj/v8_compiler/js-inlining-heuristic.o obj/v8_compiler/js-inlining.o obj/v8_compiler/js-intrinsic-lowering.o obj/v8_compiler/js-native-context-specialization.o obj/v8_compiler/js-operator.o obj/v8_compiler/js-type-hint-lowering.o obj/v8_compiler/js-typed-lowering.o obj/v8_compiler/late-escape-analysis.o obj/v8_compiler/linkage.o obj/v8_compiler/load-elimination.o obj/v8_compiler/loop-analysis.o obj/v8_compiler/loop-peeling.o obj/v8_compiler/loop-unrolling.o obj/v8_compiler/loop-variable-optimizer.o obj/v8_compiler/machine-graph-verifier.o obj/v8_compiler/machine-graph.o obj/v8_compiler/machine-operator-reducer.o obj/v8_compiler/machine-operator.o obj/v8_compiler/map-inference.o obj/v8_compiler/memory-lowering.o obj/v8_compiler/memory-optimizer.o obj/v8_compiler/node-marker.o obj/v8_compiler/node-matchers.o obj/v8_compiler/node-observer.o obj/v8_compiler/node-origin-table.o obj/v8_compiler/node-properties.o obj/v8_compiler/node.o obj/v8_compiler/opcodes.o obj/v8_compiler/operation-typer.o obj/v8_compiler/operator-properties.o obj/v8_compiler/operator.o obj/v8_compiler/osr.o obj/v8_compiler/pair-load-store-reducer.o obj/v8_compiler/pipeline-statistics.o obj/v8_compiler/pipeline.o obj/v8_compiler/property-access-builder.o obj/v8_compiler/raw-machine-assembler.o obj/v8_compiler/redundancy-elimination.o obj/v8_compiler/refs-map.o obj/v8_compiler/representation-change.o obj/v8_compiler/schedule.o obj/v8_compiler/scheduler.o obj/v8_compiler/select-lowering.o obj/v8_compiler/simplified-lowering-verifier.o obj/v8_compiler/simplified-lowering.o obj/v8_compiler/simplified-operator-reducer.o obj/v8_compiler/simplified-operator.o obj/v8_compiler/state-values-utils.o obj/v8_compiler/string-builder-optimizer.o obj/v8_compiler/turbofan-enabled.o obj/v8_compiler/turbofan-graph-visualizer.o obj/v8_compiler/turbofan-graph.o obj/v8_compiler/turbofan-typer.o obj/v8_compiler/turbofan-types.o obj/v8_compiler/analyzer-iterator.o obj/v8_compiler/assembler.o obj/v8_compiler/block-instrumentation-phase.o obj/v8_compiler/block-instrumentation-reducer.o obj/v8_compiler/build-graph-phase.o obj/v8_compiler/code-elimination-and-simplification-phase.o obj/v8_compiler/copying-phase.o obj/v8_compiler/csa-optimize-phase.o obj/v8_compiler/debug-feature-lowering-phase.o obj/v8_compiler/decompression-optimization-phase.o obj/v8_compiler/decompression-optimization.o obj/v8_compiler/graph-builder.o obj/v8_compiler/graph-visualizer.o obj/v8_compiler/graph.o obj/v8_compiler/instruction-selection-phase.o obj/v8_compiler/late-escape-analysis-reducer.o obj/v8_compiler/late-load-elimination-reducer.o obj/v8_compiler/loop-finder.o obj/v8_compiler/loop-peeling-phase.o obj/v8_compiler/loop-unrolling-phase.o obj/v8_compiler/loop-unrolling-reducer.o obj/v8_compiler/machine-lowering-phase.o obj/v8_compiler/maglev-graph-building-phase.o obj/v8_compiler/memory-optimization-reducer.o obj/v8_compiler/operations.o obj/v8_compiler/optimize-phase.o obj/v8_compiler/phase.o obj/v8_compiler/pipelines.o obj/v8_compiler/pretenuring-propagation-reducer.o obj/v8_compiler/recreate-schedule-phase.o obj/v8_compiler/recreate-schedule.o obj/v8_compiler/representations.o obj/v8_compiler/sidetable.o obj/v8_compiler/simplify-tf-loops.o obj/v8_compiler/store-store-elimination-phase.o obj/v8_compiler/type-assertions-phase.o obj/v8_compiler/type-parser.o obj/v8_compiler/typed-optimizations-phase.o obj/v8_compiler/typer.o obj/v8_compiler/types.o obj/v8_compiler/use-map.o obj/v8_compiler/utils.o obj/v8_compiler/type-cache.o obj/v8_compiler/type-narrowing-reducer.o obj/v8_compiler/typed-optimization.o obj/v8_compiler/value-numbering-reducer.o obj/v8_compiler/verifier.o obj/v8_compiler/zone-stats.o obj/v8_compiler/code-generator-x64.o obj/v8_compiler/instruction-scheduler-x64.o obj/v8_compiler/instruction-selector-x64.o obj/v8_compiler/unwinding-info-writer-x64.o obj/v8_compiler/int64-lowering.o obj/v8_compiler/int64-lowering-phase.o obj/v8_compiler/wasm-gc-optimize-phase.o obj/v8_compiler/wasm-gc-typed-optimization-reducer.o obj/v8_compiler/wasm-in-js-inlining-phase.o obj/v8_compiler/wasm-lowering-phase.o obj/v8_compiler/wasm-optimize-phase.o obj/v8_compiler/wasm-turboshaft-compiler.o obj/v8_compiler/wasm-address-reassociation.o obj/v8_compiler/wasm-call-descriptors.o obj/v8_compiler/wasm-compiler-definitions.o obj/v8_compiler/wasm-compiler.o obj/v8_compiler/wasm-escape-analysis.o obj/v8_compiler/wasm-gc-lowering.o obj/v8_compiler/wasm-gc-operator-reducer.o obj/v8_compiler/wasm-graph-assembler.o obj/v8_compiler/wasm-inlining-into-js.o obj/v8_compiler/wasm-inlining.o obj/v8_compiler/wasm-js-lowering.o obj/v8_compiler/wasm-load-elimination.o obj/v8_compiler/wasm-loop-peeling.o obj/v8_compiler/wasm-typer.o obj/v8_compiler/linear-scheduler.o obj/v8_compiler/revectorizer.o obj/v8_compiler/wasm-revec-phase.o obj/v8_compiler/wasm-revec-reducer.o || phony/generate_bytecode_builtins_list phony/run_torque phony/v8_abseil phony/v8_internal_headers phony/v8_maybe_icu phony/v8_base_without_compiler obj/libv8_libbase.a phony/v8_shared_internal_headers phony/third_party/abseil-cpp/absl phony/third_party/abseil-cpp/absl/base/base phony/third_party/abseil-cpp/absl/base/log_severity phony/third_party/abseil-cpp/absl/base/raw_logging_internal phony/third_party/abseil-cpp/absl/base/spinlock_wait phony/third_party/abseil-cpp/absl/container/btree phony/third_party/abseil-cpp/absl/container/common phony/third_party/abseil-cpp/absl/types/optional phony/third_party/abseil-cpp/absl/types/bad_optional_access phony/third_party/abseil-cpp/absl/container/layout phony/third_party/abseil-cpp/absl/debugging/demangle_internal phony/third_party/abseil-cpp/absl/debugging/demangle_rust phony/third_party/abseil-cpp/absl/debugging/decode_rust_punycode phony/third_party/abseil-cpp/absl/debugging/utf8_for_code_point phony/third_party/abseil-cpp/absl/strings/strings phony/third_party/abseil-cpp/absl/strings/string_view phony/third_party/abseil-cpp/absl/base/throw_delegate phony/third_party/abseil-cpp/absl/strings/charset phony/third_party/abseil-cpp/absl/strings/internal phony/third_party/abseil-cpp/absl/base/endian phony/third_party/abseil-cpp/absl/numeric/int128 phony/third_party/abseil-cpp/absl/types/span phony/third_party/abseil-cpp/absl/strings/cord phony/third_party/abseil-cpp/absl/strings/cord_internal phony/third_party/abseil-cpp/absl/container/inlined_vector phony/third_party/abseil-cpp/absl/container/inlined_vector_internal phony/third_party/abseil-cpp/absl/crc/crc_cord_state phony/third_party/abseil-cpp/absl/crc/crc32c phony/third_party/abseil-cpp/absl/crc/cpu_detect phony/third_party/abseil-cpp/absl/crc/crc_internal phony/third_party/abseil-cpp/absl/strings/str_format phony/third_party/abseil-cpp/absl/strings/str_format_internal phony/third_party/abseil-cpp/absl/container/fixed_array phony/third_party/abseil-cpp/absl/strings/cordz_functions phony/third_party/abseil-cpp/absl/profiling/exponential_biased phony/third_party/abseil-cpp/absl/strings/cordz_info phony/third_party/abseil-cpp/absl/strings/cordz_handle phony/third_party/abseil-cpp/absl/synchronization/synchronization phony/third_party/abseil-cpp/absl/synchronization/graphcycles_internal phony/third_party/abseil-cpp/absl/base/malloc_internal phony/third_party/abseil-cpp/absl/synchronization/kernel_timeout_internal phony/third_party/abseil-cpp/absl/time/time phony/third_party/abseil-cpp/absl/time/internal/cctz/civil_time phony/third_party/abseil-cpp/absl/time/internal/cctz/time_zone phony/third_party/abseil-cpp/absl/base/tracing_internal phony/third_party/abseil-cpp/absl/debugging/stacktrace phony/third_party/abseil-cpp/absl/debugging/debugging_internal phony/third_party/abseil-cpp/absl/debugging/symbolize phony/third_party/abseil-cpp/absl/strings/cordz_update_scope phony/third_party/abseil-cpp/absl/container/flat_hash_map phony/third_party/abseil-cpp/absl/container/hash_container_defaults phony/third_party/abseil-cpp/absl/container/hash_function_defaults phony/third_party/abseil-cpp/absl/hash/hash phony/third_party/abseil-cpp/absl/hash/city phony/third_party/abseil-cpp/absl/hash/low_level_hash phony/third_party/abseil-cpp/absl/types/variant phony/third_party/abseil-cpp/absl/types/bad_variant_access phony/third_party/abseil-cpp/absl/container/raw_hash_map phony/third_party/abseil-cpp/absl/container/raw_hash_set phony/third_party/abseil-cpp/absl/container/hashtablez_sampler phony/third_party/abseil-cpp/absl/profiling/sample_recorder phony/third_party/abseil-cpp/absl/container/flat_hash_set phony/third_party/abseil-cpp/absl/container/node_hash_map phony/third_party/abseil-cpp/absl/container/node_hash_set phony/third_party/abseil-cpp/absl/debugging/failure_signal_handler phony/third_party/abseil-cpp/absl/debugging/examine_stack phony/third_party/abseil-cpp/absl/log/absl_check phony/third_party/abseil-cpp/absl/log/internal/check_impl phony/third_party/abseil-cpp/absl/log/internal/check_op phony/third_party/abseil-cpp/absl/log/internal/nullguard phony/third_party/abseil-cpp/absl/log/internal/nullstream phony/third_party/abseil-cpp/absl/log/internal/strip phony/third_party/abseil-cpp/absl/log/internal/log_message phony/third_party/abseil-cpp/absl/log/internal/append_truncated phony/third_party/abseil-cpp/absl/log/internal/format phony/third_party/abseil-cpp/absl/log/internal/globals phony/third_party/abseil-cpp/absl/log/internal/log_sink_set phony/third_party/abseil-cpp/absl/log/globals phony/third_party/abseil-cpp/absl/log/internal/vlog_config phony/third_party/abseil-cpp/absl/log/internal/fnmatch phony/third_party/abseil-cpp/absl/log/log_entry phony/third_party/abseil-cpp/absl/log/log_sink phony/third_party/abseil-cpp/absl/log/internal/proto phony/third_party/abseil-cpp/absl/base/strerror phony/third_party/abseil-cpp/absl/log/log_sink_registry phony/third_party/abseil-cpp/absl/log/internal/conditions phony/third_party/abseil-cpp/absl/log/absl_log phony/third_party/abseil-cpp/absl/log/internal/log_impl phony/third_party/abseil-cpp/absl/log/absl_vlog_is_on phony/third_party/abseil-cpp/absl/log/die_if_null phony/third_party/abseil-cpp/absl/log/log phony/third_party/abseil-cpp/absl/log/vlog_is_on phony/third_party/abseil-cpp/absl/log/initialize phony/third_party/abseil-cpp/absl/random/random phony/third_party/abseil-cpp/absl/random/distributions phony/third_party/abseil-cpp/absl/random/internal/fast_uniform_bits phony/third_party/abseil-cpp/absl/random/internal/traits phony/third_party/abseil-cpp/absl/random/internal/generate_real phony/third_party/abseil-cpp/absl/random/internal/iostream_state_saver phony/third_party/abseil-cpp/absl/random/internal/uniform_helper phony/third_party/abseil-cpp/absl/random/internal/wide_multiply phony/third_party/abseil-cpp/absl/random/seed_sequences phony/third_party/abseil-cpp/absl/random/seed_gen_exception phony/third_party/abseil-cpp/absl/random/internal/pool_urbg phony/third_party/abseil-cpp/absl/random/internal/randen phony/third_party/abseil-cpp/absl/random/internal/platform phony/third_party/abseil-cpp/absl/random/internal/randen_hwaes phony/third_party/abseil-cpp/absl/random/internal/randen_hwaes_impl phony/third_party/abseil-cpp/absl/random/internal/randen_slow phony/third_party/abseil-cpp/absl/random/internal/seed_material phony/third_party/abseil-cpp/absl/random/internal/salted_seed_seq phony/third_party/abseil-cpp/absl/random/internal/nonsecure_base phony/third_party/abseil-cpp/absl/random/internal/pcg_engine phony/third_party/abseil-cpp/absl/random/internal/randen_engine phony/third_party/abseil-cpp/absl/status/status phony/third_party/abseil-cpp/absl/status/statusor phony/v8_flags phony/libm phony/v8_headers phony/cppgc_headers obj/libv8_libplatform.a obj/third_party/icu/libicui18n.a obj/third_party/icu/libicuuc.a phony/v8_heap_base_headers phony/cppgc_base phony/v8_heap_base phony/torque_generated_definitions phony/v8_bigint phony/src/inspector/inspector phony/src/inspector/inspector_test_headers phony/src/inspector/inspector_string_conversions phony/third_party/inspector_protocol/crdtp phony/third_party/inspector_protocol/crdtp_platform obj/third_party/zlib/libchrome_zlib.a phony/third_party/zlib/zlib_adler32_simd phony/third_party/zlib/zlib_inflate_chunk_simd phony/third_party/zlib/zlib_crc32_simd obj/third_party/zlib/google/libcompression_utils_portable.a

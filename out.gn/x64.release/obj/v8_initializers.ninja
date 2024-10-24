@@ -1,0 +1,158 @@
+defines = -DUSE_UDEV -DUSE_AURA=1 -DUSE_GLIB=1 -DUSE_OZONE=1 -D__STDC_CONSTANT_MACROS -D__STDC_FORMAT_MACROS -D_FORTIFY_SOURCE=2 -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE -D_GNU_SOURCE -DCR_CLANG_REVISION=\"llvmorg-20-init-9764-gb81d8e90-1\" -D_LIBCPP_HARDENING_MODE=_LIBCPP_HARDENING_MODE_EXTENSIVE -D_LIBCPP_DISABLE_VISIBILITY_ANNOTATIONS -D_LIBCXXABI_DISABLE_VISIBILITY_ANNOTATIONS -DCR_LIBCXX_REVISION=c8eec3629a9e1164a97a5202e40efb4ec4d148e1 -DTMP_REBUILD_HACK -DCR_SYSROOT_KEY=20230611T210420Z-2 -DNDEBUG -DNVALGRIND -DDYNAMIC_ANNOTATIONS_ENABLED=0 -DV8_TYPED_ARRAY_MAX_SIZE_IN_HEAP=64 -DENABLE_GDB_JIT_INTERFACE -DV8_INTL_SUPPORT -DV8_USE_EXTERNAL_STARTUP_DATA -DV8_ATOMIC_OBJECT_FIELD_WRITES -DV8_ENABLE_LAZY_SOURCE_POSITIONS -DV8_SHARED_RO_HEAP -DV8_WIN64_UNWINDING_INFO -DV8_ENABLE_REGEXP_INTERPRETER_THREADED_DISPATCH -DV8_ENABLE_FUZZTEST -DV8_SHORT_BUILTIN_CALLS -DV8_EXTERNAL_CODE_SPACE -DV8_ENABLE_SPARKPLUG -DV8_ENABLE_MAGLEV -DV8_ENABLE_TURBOFAN -DV8_ENABLE_WEBASSEMBLY -DV8_ENABLE_CONTINUATION_PRESERVED_EMBEDDER_DATA -DV8_ALLOCATION_FOLDING -DV8_ALLOCATION_SITE_TRACKING -DV8_ADVANCED_BIGINT_ALGORITHMS -DV8_STATIC_ROOTS -DV8_USE_ZLIB -DV8_USE_LIBM_TRIG_FUNCTIONS -DV8_ENABLE_WASM_SIMD256_REVEC -DV8_ENABLE_MAGLEV_GRAPH_PRINTER -DV8_ENABLE_BUILTIN_JUMP_TABLE_SWITCH -DV8_ENABLE_EXTENSIBLE_RO_SNAPSHOT -DV8_ENABLE_BLACK_ALLOCATED_PAGES -DV8_WASM_RANDOM_FUZZERS -DV8_ARRAY_BUFFER_INTERNAL_FIELD_COUNT=0 -DV8_ARRAY_BUFFER_VIEW_INTERNAL_FIELD_COUNT=0 -DV8_PROMISE_INTERNAL_FIELD_COUNT=0 -DV8_COMPRESS_POINTERS -DV8_COMPRESS_POINTERS_IN_SHARED_CAGE -DV8_31BIT_SMIS_ON_64BIT_ARCH -DV8_ENABLE_SANDBOX -DV8_DEPRECATION_WARNINGS -DV8_IMMINENT_DEPRECATION_WARNINGS -DV8_HAVE_TARGET_OS -DV8_TARGET_OS_LINUX -DCPPGC_CAGED_HEAP -DCPPGC_YOUNG_GENERATION -DCPPGC_POINTER_COMPRESSION -DCPPGC_ENABLE_LARGER_CAGE -DCPPGC_SLIM_WRITE_BARRIER -DV8_TARGET_ARCH_X64 -DV8_RUNTIME_CALL_STATS -DABSL_ALLOCATOR_NOTHROW=1 -DU_USING_ICU_NAMESPACE=0 -DU_ENABLE_DYLOAD=0 -DUSE_CHROMIUM_ICU=1 -DU_ENABLE_TRACING=1 -DU_ENABLE_RESOURCE_TRACING=0 -DU_STATIC_IMPLEMENTATION -DICU_UTIL_DATA_IMPL=ICU_UTIL_DATA_FILE
+include_dirs = -I../.. -Igen -I../../buildtools/third_party/libc++ -I../../include -I../../third_party/abseil-cpp -I../../third_party/icu/source/common -I../../third_party/icu/source/i18n -Igen/include -I../../third_party/fp16/src/include
+cflags = -Wall -Wextra -Wimplicit-fallthrough -Wextra-semi -Wunreachable-code-aggressive -Wthread-safety -Wno-missing-field-initializers -Wno-unused-parameter -Wno-psabi -Wloop-analysis -Wno-unneeded-internal-declaration -Wno-cast-function-type -Wno-thread-safety-reference-return -Wshadow -Werror -fno-delete-null-pointer-checks -fno-ident -fno-strict-aliasing -fstack-protector -funwind-tables -fPIC -pthread -fcolor-diagnostics -fmerge-all-constants -fno-sized-deallocation -fcrash-diagnostics-dir=../../tools/clang/crashreports -mllvm -instcombine-lower-dbg-declare=0 -mllvm -split-threshold-for-reg-with-hint=0 -ffp-contract=off -Wa,--crel,--allow-experimental-crel -fcomplete-member-pointers -m64 -msse3 -Wno-builtin-macro-redefined -D__DATE__= -D__TIME__= -D__TIMESTAMP__= -ffile-compilation-dir=. -no-canonical-prefixes -fno-omit-frame-pointer -g0 -fvisibility=hidden -Wheader-hygiene -Wstring-conversion -Wtautological-overlap-compare -Wunreachable-code -Wno-shadow -Wctad-maybe-unsupported -Wno-invalid-offsetof -Wshorten-64-to-32 -Wmissing-field-initializers -O3 -fdata-sections -ffunction-sections -fno-unique-section-names -fno-math-errno -Wexit-time-destructors
+cflags_cc = -Wno-invalid-offsetof -Wenum-compare-conditional -Wno-c++11-narrowing-const-reference -Wno-missing-template-arg-list-after-template-kw -Wno-dangling-assignment-gsl -std=c++20 -Wno-trigraphs -gsimple-template-names -fno-exceptions -fno-rtti -nostdinc++ -isystem../../third_party/libc++/src/include -isystem../../third_party/libc++abi/src/include --sysroot=../../build/linux/debian_bullseye_amd64-sysroot -fvisibility-inlines-hidden
+label_name = v8_initializers
+target_out_dir = obj
+target_output_name = v8_initializers
+
+build phony/v8_initializers.inputdeps: phony phony/generate_bytecode_builtins_list phony/run_gen-regexp-special-case phony/run_torque phony/build/chromeos_buildflags phony/src/inspector/protocol_generated_sources phony/third_party/icu/copy_icudata
+build obj/v8_initializers/builtins-array-gen.o: cxx ../../src/builtins/builtins-array-gen.cc || phony/v8_initializers.inputdeps
+  source_file_part = builtins-array-gen.cc
+  source_name_part = builtins-array-gen
+build obj/v8_initializers/builtins-async-function-gen.o: cxx ../../src/builtins/builtins-async-function-gen.cc || phony/v8_initializers.inputdeps
+  source_file_part = builtins-async-function-gen.cc
+  source_name_part = builtins-async-function-gen
+build obj/v8_initializers/builtins-async-gen.o: cxx ../../src/builtins/builtins-async-gen.cc || phony/v8_initializers.inputdeps
+  source_file_part = builtins-async-gen.cc
+  source_name_part = builtins-async-gen
+build obj/v8_initializers/builtins-async-generator-gen.o: cxx ../../src/builtins/builtins-async-generator-gen.cc || phony/v8_initializers.inputdeps
+  source_file_part = builtins-async-generator-gen.cc
+  source_name_part = builtins-async-generator-gen
+build obj/v8_initializers/builtins-async-iterator-gen.o: cxx ../../src/builtins/builtins-async-iterator-gen.cc || phony/v8_initializers.inputdeps
+  source_file_part = builtins-async-iterator-gen.cc
+  source_name_part = builtins-async-iterator-gen
+build obj/v8_initializers/builtins-bigint-gen.o: cxx ../../src/builtins/builtins-bigint-gen.cc || phony/v8_initializers.inputdeps
+  source_file_part = builtins-bigint-gen.cc
+  source_name_part = builtins-bigint-gen
+build obj/v8_initializers/builtins-call-gen.o: cxx ../../src/builtins/builtins-call-gen.cc || phony/v8_initializers.inputdeps
+  source_file_part = builtins-call-gen.cc
+  source_name_part = builtins-call-gen
+build obj/v8_initializers/builtins-collections-gen.o: cxx ../../src/builtins/builtins-collections-gen.cc || phony/v8_initializers.inputdeps
+  source_file_part = builtins-collections-gen.cc
+  source_name_part = builtins-collections-gen
+build obj/v8_initializers/builtins-constructor-gen.o: cxx ../../src/builtins/builtins-constructor-gen.cc || phony/v8_initializers.inputdeps
+  source_file_part = builtins-constructor-gen.cc
+  source_name_part = builtins-constructor-gen
+build obj/v8_initializers/builtins-conversion-gen.o: cxx ../../src/builtins/builtins-conversion-gen.cc || phony/v8_initializers.inputdeps
+  source_file_part = builtins-conversion-gen.cc
+  source_name_part = builtins-conversion-gen
+build obj/v8_initializers/builtins-date-gen.o: cxx ../../src/builtins/builtins-date-gen.cc || phony/v8_initializers.inputdeps
+  source_file_part = builtins-date-gen.cc
+  source_name_part = builtins-date-gen
+build obj/v8_initializers/builtins-generator-gen.o: cxx ../../src/builtins/builtins-generator-gen.cc || phony/v8_initializers.inputdeps
+  source_file_part = builtins-generator-gen.cc
+  source_name_part = builtins-generator-gen
+build obj/v8_initializers/builtins-global-gen.o: cxx ../../src/builtins/builtins-global-gen.cc || phony/v8_initializers.inputdeps
+  source_file_part = builtins-global-gen.cc
+  source_name_part = builtins-global-gen
+build obj/v8_initializers/builtins-handler-gen.o: cxx ../../src/builtins/builtins-handler-gen.cc || phony/v8_initializers.inputdeps
+  source_file_part = builtins-handler-gen.cc
+  source_name_part = builtins-handler-gen
+build obj/v8_initializers/builtins-ic-gen.o: cxx ../../src/builtins/builtins-ic-gen.cc || phony/v8_initializers.inputdeps
+  source_file_part = builtins-ic-gen.cc
+  source_name_part = builtins-ic-gen
+build obj/v8_initializers/builtins-internal-gen.o: cxx ../../src/builtins/builtins-internal-gen.cc || phony/v8_initializers.inputdeps
+  source_file_part = builtins-internal-gen.cc
+  source_name_part = builtins-internal-gen
+build obj/v8_initializers/builtins-interpreter-gen.o: cxx ../../src/builtins/builtins-interpreter-gen.cc || phony/v8_initializers.inputdeps
+  source_file_part = builtins-interpreter-gen.cc
+  source_name_part = builtins-interpreter-gen
+build obj/v8_initializers/builtins-intl-gen.o: cxx ../../src/builtins/builtins-intl-gen.cc || phony/v8_initializers.inputdeps
+  source_file_part = builtins-intl-gen.cc
+  source_name_part = builtins-intl-gen
+build obj/v8_initializers/builtins-iterator-gen.o: cxx ../../src/builtins/builtins-iterator-gen.cc || phony/v8_initializers.inputdeps
+  source_file_part = builtins-iterator-gen.cc
+  source_name_part = builtins-iterator-gen
+build obj/v8_initializers/builtins-lazy-gen.o: cxx ../../src/builtins/builtins-lazy-gen.cc || phony/v8_initializers.inputdeps
+  source_file_part = builtins-lazy-gen.cc
+  source_name_part = builtins-lazy-gen
+build obj/v8_initializers/builtins-microtask-queue-gen.o: cxx ../../src/builtins/builtins-microtask-queue-gen.cc || phony/v8_initializers.inputdeps
+  source_file_part = builtins-microtask-queue-gen.cc
+  source_name_part = builtins-microtask-queue-gen
+build obj/v8_initializers/builtins-number-gen.o: cxx ../../src/builtins/builtins-number-gen.cc || phony/v8_initializers.inputdeps
+  source_file_part = builtins-number-gen.cc
+  source_name_part = builtins-number-gen
+build obj/v8_initializers/builtins-number-tsa.o: cxx ../../src/builtins/builtins-number-tsa.cc || phony/v8_initializers.inputdeps
+  source_file_part = builtins-number-tsa.cc
+  source_name_part = builtins-number-tsa
+build obj/v8_initializers/builtins-object-gen.o: cxx ../../src/builtins/builtins-object-gen.cc || phony/v8_initializers.inputdeps
+  source_file_part = builtins-object-gen.cc
+  source_name_part = builtins-object-gen
+build obj/v8_initializers/builtins-promise-gen.o: cxx ../../src/builtins/builtins-promise-gen.cc || phony/v8_initializers.inputdeps
+  source_file_part = builtins-promise-gen.cc
+  source_name_part = builtins-promise-gen
+build obj/v8_initializers/builtins-proxy-gen.o: cxx ../../src/builtins/builtins-proxy-gen.cc || phony/v8_initializers.inputdeps
+  source_file_part = builtins-proxy-gen.cc
+  source_name_part = builtins-proxy-gen
+build obj/v8_initializers/builtins-regexp-gen.o: cxx ../../src/builtins/builtins-regexp-gen.cc || phony/v8_initializers.inputdeps
+  source_file_part = builtins-regexp-gen.cc
+  source_name_part = builtins-regexp-gen
+build obj/v8_initializers/builtins-shadow-realm-gen.o: cxx ../../src/builtins/builtins-shadow-realm-gen.cc || phony/v8_initializers.inputdeps
+  source_file_part = builtins-shadow-realm-gen.cc
+  source_name_part = builtins-shadow-realm-gen
+build obj/v8_initializers/builtins-sharedarraybuffer-gen.o: cxx ../../src/builtins/builtins-sharedarraybuffer-gen.cc || phony/v8_initializers.inputdeps
+  source_file_part = builtins-sharedarraybuffer-gen.cc
+  source_name_part = builtins-sharedarraybuffer-gen
+build obj/v8_initializers/builtins-string-gen.o: cxx ../../src/builtins/builtins-string-gen.cc || phony/v8_initializers.inputdeps
+  source_file_part = builtins-string-gen.cc
+  source_name_part = builtins-string-gen
+build obj/v8_initializers/builtins-string-tsa.o: cxx ../../src/builtins/builtins-string-tsa.cc || phony/v8_initializers.inputdeps
+  source_file_part = builtins-string-tsa.cc
+  source_name_part = builtins-string-tsa
+build obj/v8_initializers/builtins-temporal-gen.o: cxx ../../src/builtins/builtins-temporal-gen.cc || phony/v8_initializers.inputdeps
+  source_file_part = builtins-temporal-gen.cc
+  source_name_part = builtins-temporal-gen
+build obj/v8_initializers/builtins-typed-array-gen.o: cxx ../../src/builtins/builtins-typed-array-gen.cc || phony/v8_initializers.inputdeps
+  source_file_part = builtins-typed-array-gen.cc
+  source_name_part = builtins-typed-array-gen
+build obj/v8_initializers/growable-fixed-array-gen.o: cxx ../../src/builtins/growable-fixed-array-gen.cc || phony/v8_initializers.inputdeps
+  source_file_part = growable-fixed-array-gen.cc
+  source_name_part = growable-fixed-array-gen
+build obj/v8_initializers/profile-data-reader.o: cxx ../../src/builtins/profile-data-reader.cc || phony/v8_initializers.inputdeps
+  source_file_part = profile-data-reader.cc
+  source_name_part = profile-data-reader
+build obj/v8_initializers/setup-builtins-internal.o: cxx ../../src/builtins/setup-builtins-internal.cc || phony/v8_initializers.inputdeps
+  source_file_part = setup-builtins-internal.cc
+  source_name_part = setup-builtins-internal
+build obj/v8_initializers/code-stub-assembler.o: cxx ../../src/codegen/code-stub-assembler.cc || phony/v8_initializers.inputdeps
+  source_file_part = code-stub-assembler.cc
+  source_name_part = code-stub-assembler
+build obj/v8_initializers/builtin-compiler.o: cxx ../../src/compiler/turboshaft/builtin-compiler.cc || phony/v8_initializers.inputdeps
+  source_file_part = builtin-compiler.cc
+  source_name_part = builtin-compiler
+build obj/v8_initializers/setup-heap-internal.o: cxx ../../src/heap/setup-heap-internal.cc || phony/v8_initializers.inputdeps
+  source_file_part = setup-heap-internal.cc
+  source_name_part = setup-heap-internal
+build obj/v8_initializers/accessor-assembler.o: cxx ../../src/ic/accessor-assembler.cc || phony/v8_initializers.inputdeps
+  source_file_part = accessor-assembler.cc
+  source_name_part = accessor-assembler
+build obj/v8_initializers/binary-op-assembler.o: cxx ../../src/ic/binary-op-assembler.cc || phony/v8_initializers.inputdeps
+  source_file_part = binary-op-assembler.cc
+  source_name_part = binary-op-assembler
+build obj/v8_initializers/keyed-store-generic.o: cxx ../../src/ic/keyed-store-generic.cc || phony/v8_initializers.inputdeps
+  source_file_part = keyed-store-generic.cc
+  source_name_part = keyed-store-generic
+build obj/v8_initializers/unary-op-assembler.o: cxx ../../src/ic/unary-op-assembler.cc || phony/v8_initializers.inputdeps
+  source_file_part = unary-op-assembler.cc
+  source_name_part = unary-op-assembler
+build obj/v8_initializers/interpreter-assembler.o: cxx ../../src/interpreter/interpreter-assembler.cc || phony/v8_initializers.inputdeps
+  source_file_part = interpreter-assembler.cc
+  source_name_part = interpreter-assembler
+build obj/v8_initializers/interpreter-generator-tsa.o: cxx ../../src/interpreter/interpreter-generator-tsa.cc || phony/v8_initializers.inputdeps
+  source_file_part = interpreter-generator-tsa.cc
+  source_name_part = interpreter-generator-tsa
+build obj/v8_initializers/interpreter-generator.o: cxx ../../src/interpreter/interpreter-generator.cc || phony/v8_initializers.inputdeps
+  source_file_part = interpreter-generator.cc
+  source_name_part = interpreter-generator
+build obj/v8_initializers/interpreter-intrinsics-generator.o: cxx ../../src/interpreter/interpreter-intrinsics-generator.cc || phony/v8_initializers.inputdeps
+  source_file_part = interpreter-intrinsics-generator.cc
+  source_name_part = interpreter-intrinsics-generator
+build obj/v8_initializers/builtins-wasm-gen.o: cxx ../../src/builtins/builtins-wasm-gen.cc || phony/v8_initializers.inputdeps
+  source_file_part = builtins-wasm-gen.cc
+  source_name_part = builtins-wasm-gen
+build obj/v8_initializers/builtins-x64.o: cxx ../../src/builtins/x64/builtins-x64.cc || phony/v8_initializers.inputdeps
+  source_file_part = builtins-x64.cc
+  source_name_part = builtins-x64
+
+build phony/v8_initializers: phony obj/v8_initializers/builtins-array-gen.o obj/v8_initializers/builtins-async-function-gen.o obj/v8_initializers/builtins-async-gen.o obj/v8_initializers/builtins-async-generator-gen.o obj/v8_initializers/builtins-async-iterator-gen.o obj/v8_initializers/builtins-bigint-gen.o obj/v8_initializers/builtins-call-gen.o obj/v8_initializers/builtins-collections-gen.o obj/v8_initializers/builtins-constructor-gen.o obj/v8_initializers/builtins-conversion-gen.o obj/v8_initializers/builtins-date-gen.o obj/v8_initializers/builtins-generator-gen.o obj/v8_initializers/builtins-global-gen.o obj/v8_initializers/builtins-handler-gen.o obj/v8_initializers/builtins-ic-gen.o obj/v8_initializers/builtins-internal-gen.o obj/v8_initializers/builtins-interpreter-gen.o obj/v8_initializers/builtins-intl-gen.o obj/v8_initializers/builtins-iterator-gen.o obj/v8_initializers/builtins-lazy-gen.o obj/v8_initializers/builtins-microtask-queue-gen.o obj/v8_initializers/builtins-number-gen.o obj/v8_initializers/builtins-number-tsa.o obj/v8_initializers/builtins-object-gen.o obj/v8_initializers/builtins-promise-gen.o obj/v8_initializers/builtins-proxy-gen.o obj/v8_initializers/builtins-regexp-gen.o obj/v8_initializers/builtins-shadow-realm-gen.o obj/v8_initializers/builtins-sharedarraybuffer-gen.o obj/v8_initializers/builtins-string-gen.o obj/v8_initializers/builtins-string-tsa.o obj/v8_initializers/builtins-temporal-gen.o obj/v8_initializers/builtins-typed-array-gen.o obj/v8_initializers/growable-fixed-array-gen.o obj/v8_initializers/profile-data-reader.o obj/v8_initializers/setup-builtins-internal.o obj/v8_initializers/code-stub-assembler.o obj/v8_initializers/builtin-compiler.o obj/v8_initializers/setup-heap-internal.o obj/v8_initializers/accessor-assembler.o obj/v8_initializers/binary-op-assembler.o obj/v8_initializers/keyed-store-generic.o obj/v8_initializers/unary-op-assembler.o obj/v8_initializers/interpreter-assembler.o obj/v8_initializers/interpreter-generator-tsa.o obj/v8_initializers/interpreter-generator.o obj/v8_initializers/interpreter-intrinsics-generator.o obj/v8_initializers/builtins-wasm-gen.o obj/v8_initializers/builtins-x64.o || phony/torque_generated_initializers phony/v8_base_without_compiler phony/v8_shared_internal_headers phony/third_party/abseil-cpp/absl phony/third_party/abseil-cpp/absl/base/base phony/third_party/abseil-cpp/absl/base/log_severity phony/third_party/abseil-cpp/absl/base/raw_logging_internal phony/third_party/abseil-cpp/absl/base/spinlock_wait phony/third_party/abseil-cpp/absl/container/btree phony/third_party/abseil-cpp/absl/container/common phony/third_party/abseil-cpp/absl/types/optional phony/third_party/abseil-cpp/absl/types/bad_optional_access phony/third_party/abseil-cpp/absl/container/layout phony/third_party/abseil-cpp/absl/debugging/demangle_internal phony/third_party/abseil-cpp/absl/debugging/demangle_rust phony/third_party/abseil-cpp/absl/debugging/decode_rust_punycode phony/third_party/abseil-cpp/absl/debugging/utf8_for_code_point phony/third_party/abseil-cpp/absl/strings/strings phony/third_party/abseil-cpp/absl/strings/string_view phony/third_party/abseil-cpp/absl/base/throw_delegate phony/third_party/abseil-cpp/absl/strings/charset phony/third_party/abseil-cpp/absl/strings/internal phony/third_party/abseil-cpp/absl/base/endian phony/third_party/abseil-cpp/absl/numeric/int128 phony/third_party/abseil-cpp/absl/types/span phony/third_party/abseil-cpp/absl/strings/cord phony/third_party/abseil-cpp/absl/strings/cord_internal phony/third_party/abseil-cpp/absl/container/inlined_vector phony/third_party/abseil-cpp/absl/container/inlined_vector_internal phony/third_party/abseil-cpp/absl/crc/crc_cord_state phony/third_party/abseil-cpp/absl/crc/crc32c phony/third_party/abseil-cpp/absl/crc/cpu_detect phony/third_party/abseil-cpp/absl/crc/crc_internal phony/third_party/abseil-cpp/absl/strings/str_format phony/third_party/abseil-cpp/absl/strings/str_format_internal phony/third_party/abseil-cpp/absl/container/fixed_array phony/third_party/abseil-cpp/absl/strings/cordz_functions phony/third_party/abseil-cpp/absl/profiling/exponential_biased phony/third_party/abseil-cpp/absl/strings/cordz_info phony/third_party/abseil-cpp/absl/strings/cordz_handle phony/third_party/abseil-cpp/absl/synchronization/synchronization phony/third_party/abseil-cpp/absl/synchronization/graphcycles_internal phony/third_party/abseil-cpp/absl/base/malloc_internal phony/third_party/abseil-cpp/absl/synchronization/kernel_timeout_internal phony/third_party/abseil-cpp/absl/time/time phony/third_party/abseil-cpp/absl/time/internal/cctz/civil_time phony/third_party/abseil-cpp/absl/time/internal/cctz/time_zone phony/third_party/abseil-cpp/absl/base/tracing_internal phony/third_party/abseil-cpp/absl/debugging/stacktrace phony/third_party/abseil-cpp/absl/debugging/debugging_internal phony/third_party/abseil-cpp/absl/debugging/symbolize phony/third_party/abseil-cpp/absl/strings/cordz_update_scope phony/third_party/abseil-cpp/absl/container/flat_hash_map phony/third_party/abseil-cpp/absl/container/hash_container_defaults phony/third_party/abseil-cpp/absl/container/hash_function_defaults phony/third_party/abseil-cpp/absl/hash/hash phony/third_party/abseil-cpp/absl/hash/city phony/third_party/abseil-cpp/absl/hash/low_level_hash phony/third_party/abseil-cpp/absl/types/variant phony/third_party/abseil-cpp/absl/types/bad_variant_access phony/third_party/abseil-cpp/absl/container/raw_hash_map phony/third_party/abseil-cpp/absl/container/raw_hash_set phony/third_party/abseil-cpp/absl/container/hashtablez_sampler phony/third_party/abseil-cpp/absl/profiling/sample_recorder phony/third_party/abseil-cpp/absl/container/flat_hash_set phony/third_party/abseil-cpp/absl/container/node_hash_map phony/third_party/abseil-cpp/absl/container/node_hash_set phony/third_party/abseil-cpp/absl/debugging/failure_signal_handler phony/third_party/abseil-cpp/absl/debugging/examine_stack phony/third_party/abseil-cpp/absl/log/absl_check phony/third_party/abseil-cpp/absl/log/internal/check_impl phony/third_party/abseil-cpp/absl/log/internal/check_op phony/third_party/abseil-cpp/absl/log/internal/nullguard phony/third_party/abseil-cpp/absl/log/internal/nullstream phony/third_party/abseil-cpp/absl/log/internal/strip phony/third_party/abseil-cpp/absl/log/internal/log_message phony/third_party/abseil-cpp/absl/log/internal/append_truncated phony/third_party/abseil-cpp/absl/log/internal/format phony/third_party/abseil-cpp/absl/log/internal/globals phony/third_party/abseil-cpp/absl/log/internal/log_sink_set phony/third_party/abseil-cpp/absl/log/globals phony/third_party/abseil-cpp/absl/log/internal/vlog_config phony/third_party/abseil-cpp/absl/log/internal/fnmatch phony/third_party/abseil-cpp/absl/log/log_entry phony/third_party/abseil-cpp/absl/log/log_sink phony/third_party/abseil-cpp/absl/log/internal/proto phony/third_party/abseil-cpp/absl/base/strerror phony/third_party/abseil-cpp/absl/log/log_sink_registry phony/third_party/abseil-cpp/absl/log/internal/conditions phony/third_party/abseil-cpp/absl/log/absl_log phony/third_party/abseil-cpp/absl/log/internal/log_impl phony/third_party/abseil-cpp/absl/log/absl_vlog_is_on phony/third_party/abseil-cpp/absl/log/die_if_null phony/third_party/abseil-cpp/absl/log/log phony/third_party/abseil-cpp/absl/log/vlog_is_on phony/third_party/abseil-cpp/absl/log/initialize phony/third_party/abseil-cpp/absl/random/random phony/third_party/abseil-cpp/absl/random/distributions phony/third_party/abseil-cpp/absl/random/internal/fast_uniform_bits phony/third_party/abseil-cpp/absl/random/internal/traits phony/third_party/abseil-cpp/absl/random/internal/generate_real phony/third_party/abseil-cpp/absl/random/internal/iostream_state_saver phony/third_party/abseil-cpp/absl/random/internal/uniform_helper phony/third_party/abseil-cpp/absl/random/internal/wide_multiply phony/third_party/abseil-cpp/absl/random/seed_sequences phony/third_party/abseil-cpp/absl/random/seed_gen_exception phony/third_party/abseil-cpp/absl/random/internal/pool_urbg phony/third_party/abseil-cpp/absl/random/internal/randen phony/third_party/abseil-cpp/absl/random/internal/platform phony/third_party/abseil-cpp/absl/random/internal/randen_hwaes phony/third_party/abseil-cpp/absl/random/internal/randen_hwaes_impl phony/third_party/abseil-cpp/absl/random/internal/randen_slow phony/third_party/abseil-cpp/absl/random/internal/seed_material phony/third_party/abseil-cpp/absl/random/internal/salted_seed_seq phony/third_party/abseil-cpp/absl/random/internal/nonsecure_base phony/third_party/abseil-cpp/absl/random/internal/pcg_engine phony/third_party/abseil-cpp/absl/random/internal/randen_engine phony/third_party/abseil-cpp/absl/status/status phony/third_party/abseil-cpp/absl/status/statusor obj/third_party/icu/libicui18n.a obj/third_party/icu/libicuuc.a phony/cppgc_base phony/cppgc_headers obj/libv8_libbase.a phony/libm obj/libv8_libplatform.a phony/v8_heap_base phony/v8_heap_base_headers phony/v8_headers phony/v8_internal_headers phony/v8_flags phony/torque_generated_definitions phony/v8_bigint phony/src/inspector/inspector phony/src/inspector/inspector_test_headers phony/src/inspector/inspector_string_conversions phony/third_party/inspector_protocol/crdtp phony/third_party/inspector_protocol/crdtp_platform obj/third_party/zlib/libchrome_zlib.a phony/third_party/zlib/zlib_adler32_simd phony/third_party/zlib/zlib_inflate_chunk_simd phony/third_party/zlib/zlib_crc32_simd obj/third_party/zlib/google/libcompression_utils_portable.a

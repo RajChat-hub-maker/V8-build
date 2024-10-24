@@ -1,0 +1,155 @@
+defines = -DUSE_UDEV -DUSE_AURA=1 -DUSE_GLIB=1 -DUSE_OZONE=1 -D__STDC_CONSTANT_MACROS -D__STDC_FORMAT_MACROS -D_FORTIFY_SOURCE=2 -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE -D_GNU_SOURCE -DCR_CLANG_REVISION=\"llvmorg-20-init-9764-gb81d8e90-1\" -D_LIBCPP_HARDENING_MODE=_LIBCPP_HARDENING_MODE_EXTENSIVE -D_LIBCPP_DISABLE_VISIBILITY_ANNOTATIONS -D_LIBCXXABI_DISABLE_VISIBILITY_ANNOTATIONS -DCR_LIBCXX_REVISION=c8eec3629a9e1164a97a5202e40efb4ec4d148e1 -DTMP_REBUILD_HACK -DCR_SYSROOT_KEY=20230611T210420Z-2 -DNDEBUG -DNVALGRIND -DDYNAMIC_ANNOTATIONS_ENABLED=0 -DV8_TYPED_ARRAY_MAX_SIZE_IN_HEAP=64 -DENABLE_GDB_JIT_INTERFACE -DV8_INTL_SUPPORT -DV8_USE_EXTERNAL_STARTUP_DATA -DV8_ATOMIC_OBJECT_FIELD_WRITES -DV8_ENABLE_LAZY_SOURCE_POSITIONS -DV8_SHARED_RO_HEAP -DV8_WIN64_UNWINDING_INFO -DV8_ENABLE_REGEXP_INTERPRETER_THREADED_DISPATCH -DV8_ENABLE_FUZZTEST -DV8_SHORT_BUILTIN_CALLS -DV8_EXTERNAL_CODE_SPACE -DV8_ENABLE_SPARKPLUG -DV8_ENABLE_MAGLEV -DV8_ENABLE_TURBOFAN -DV8_ENABLE_WEBASSEMBLY -DV8_ENABLE_CONTINUATION_PRESERVED_EMBEDDER_DATA -DV8_ALLOCATION_FOLDING -DV8_ALLOCATION_SITE_TRACKING -DV8_ADVANCED_BIGINT_ALGORITHMS -DV8_STATIC_ROOTS -DV8_USE_ZLIB -DV8_USE_LIBM_TRIG_FUNCTIONS -DV8_ENABLE_WASM_SIMD256_REVEC -DV8_ENABLE_MAGLEV_GRAPH_PRINTER -DV8_ENABLE_BUILTIN_JUMP_TABLE_SWITCH -DV8_ENABLE_EXTENSIBLE_RO_SNAPSHOT -DV8_ENABLE_BLACK_ALLOCATED_PAGES -DV8_WASM_RANDOM_FUZZERS -DV8_ARRAY_BUFFER_INTERNAL_FIELD_COUNT=0 -DV8_ARRAY_BUFFER_VIEW_INTERNAL_FIELD_COUNT=0 -DV8_PROMISE_INTERNAL_FIELD_COUNT=0 -DV8_COMPRESS_POINTERS -DV8_COMPRESS_POINTERS_IN_SHARED_CAGE -DV8_31BIT_SMIS_ON_64BIT_ARCH -DV8_ENABLE_SANDBOX -DV8_DEPRECATION_WARNINGS -DV8_IMMINENT_DEPRECATION_WARNINGS -DV8_HAVE_TARGET_OS -DV8_TARGET_OS_LINUX -DCPPGC_CAGED_HEAP -DCPPGC_YOUNG_GENERATION -DCPPGC_POINTER_COMPRESSION -DCPPGC_ENABLE_LARGER_CAGE -DCPPGC_SLIM_WRITE_BARRIER -DV8_TARGET_ARCH_X64 -DV8_RUNTIME_CALL_STATS -DGTEST_API_= -DGTEST_HAS_POSIX_RE=0 -DGTEST_LANG_CXX11=1 -DGTEST_HAS_TR1_TUPLE=0 -DUNIT_TEST -DABSL_ALLOCATOR_NOTHROW=1 -DU_USING_ICU_NAMESPACE=0 -DU_ENABLE_DYLOAD=0 -DUSE_CHROMIUM_ICU=1 -DU_ENABLE_TRACING=1 -DU_ENABLE_RESOURCE_TRACING=0 -DU_STATIC_IMPLEMENTATION -DICU_UTIL_DATA_IMPL=ICU_UTIL_DATA_FILE
+include_dirs = -I../.. -Igen -I../../buildtools/third_party/libc++ -I../../include -I../../third_party/googletest/custom -I../../third_party/googletest/src/googletest/include -I../../third_party/googletest/src/googlemock/include -I../../third_party/abseil-cpp -Igen/include -I../../third_party/icu/source/common -I../../third_party/icu/source/i18n -I../../third_party/fp16/src/include
+cflags = -Wall -Wextra -Wimplicit-fallthrough -Wextra-semi -Wunreachable-code-aggressive -Wthread-safety -Wno-missing-field-initializers -Wno-unused-parameter -Wno-psabi -Wloop-analysis -Wno-unneeded-internal-declaration -Wno-cast-function-type -Wno-thread-safety-reference-return -Wshadow -Werror -fno-delete-null-pointer-checks -fno-ident -fno-strict-aliasing -fstack-protector -funwind-tables -fPIC -pthread -fcolor-diagnostics -fmerge-all-constants -fno-sized-deallocation -fcrash-diagnostics-dir=../../tools/clang/crashreports -mllvm -instcombine-lower-dbg-declare=0 -mllvm -split-threshold-for-reg-with-hint=0 -ffp-contract=off -Wa,--crel,--allow-experimental-crel -fcomplete-member-pointers -m64 -msse3 -Wno-builtin-macro-redefined -D__DATE__= -D__TIME__= -D__TIMESTAMP__= -ffile-compilation-dir=. -no-canonical-prefixes -fno-omit-frame-pointer -g0 -fvisibility=hidden -Wheader-hygiene -Wstring-conversion -Wtautological-overlap-compare -Wunreachable-code -Wno-shadow -Wctad-maybe-unsupported -Wno-invalid-offsetof -Wshorten-64-to-32 -Wmissing-field-initializers -O3 -fdata-sections -ffunction-sections -fno-unique-section-names -fno-math-errno
+cflags_cc = -Wno-invalid-offsetof -Wenum-compare-conditional -Wno-c++11-narrowing-const-reference -Wno-missing-template-arg-list-after-template-kw -Wno-dangling-assignment-gsl -std=c++20 -Wno-trigraphs -gsimple-template-names -fno-exceptions -fno-rtti -nostdinc++ -isystem../../third_party/libc++/src/include -isystem../../third_party/libc++abi/src/include --sysroot=../../build/linux/debian_bullseye_amd64-sysroot -fvisibility-inlines-hidden
+label_name = cppgc_unittests_sources
+target_out_dir = obj/test/unittests
+target_output_name = cppgc_unittests_sources
+
+build phony/test/unittests/cppgc_unittests_sources.inputdeps: phony phony/generate_bytecode_builtins_list phony/run_gen-regexp-special-case phony/run_torque phony/build/chromeos_buildflags phony/src/inspector/protocol_generated_sources phony/third_party/icu/copy_icudata
+build obj/test/unittests/cppgc_unittests_sources/allocation-unittest.o: cxx ../../test/unittests/heap/cppgc/allocation-unittest.cc || phony/test/unittests/cppgc_unittests_sources.inputdeps
+  source_file_part = allocation-unittest.cc
+  source_name_part = allocation-unittest
+build obj/test/unittests/cppgc_unittests_sources/caged-heap-unittest.o: cxx ../../test/unittests/heap/cppgc/caged-heap-unittest.cc || phony/test/unittests/cppgc_unittests_sources.inputdeps
+  source_file_part = caged-heap-unittest.cc
+  source_name_part = caged-heap-unittest
+build obj/test/unittests/cppgc_unittests_sources/compactor-unittest.o: cxx ../../test/unittests/heap/cppgc/compactor-unittest.cc || phony/test/unittests/cppgc_unittests_sources.inputdeps
+  source_file_part = compactor-unittest.cc
+  source_name_part = compactor-unittest
+build obj/test/unittests/cppgc_unittests_sources/concurrent-marking-unittest.o: cxx ../../test/unittests/heap/cppgc/concurrent-marking-unittest.cc || phony/test/unittests/cppgc_unittests_sources.inputdeps
+  source_file_part = concurrent-marking-unittest.cc
+  source_name_part = concurrent-marking-unittest
+build obj/test/unittests/cppgc_unittests_sources/concurrent-sweeper-unittest.o: cxx ../../test/unittests/heap/cppgc/concurrent-sweeper-unittest.cc || phony/test/unittests/cppgc_unittests_sources.inputdeps
+  source_file_part = concurrent-sweeper-unittest.cc
+  source_name_part = concurrent-sweeper-unittest
+build obj/test/unittests/cppgc_unittests_sources/cross-thread-persistent-unittest.o: cxx ../../test/unittests/heap/cppgc/cross-thread-persistent-unittest.cc || phony/test/unittests/cppgc_unittests_sources.inputdeps
+  source_file_part = cross-thread-persistent-unittest.cc
+  source_name_part = cross-thread-persistent-unittest
+build obj/test/unittests/cppgc_unittests_sources/custom-spaces-unittest.o: cxx ../../test/unittests/heap/cppgc/custom-spaces-unittest.cc || phony/test/unittests/cppgc_unittests_sources.inputdeps
+  source_file_part = custom-spaces-unittest.cc
+  source_name_part = custom-spaces-unittest
+build obj/test/unittests/cppgc_unittests_sources/ephemeron-pair-unittest.o: cxx ../../test/unittests/heap/cppgc/ephemeron-pair-unittest.cc || phony/test/unittests/cppgc_unittests_sources.inputdeps
+  source_file_part = ephemeron-pair-unittest.cc
+  source_name_part = ephemeron-pair-unittest
+build obj/test/unittests/cppgc_unittests_sources/explicit-management-unittest.o: cxx ../../test/unittests/heap/cppgc/explicit-management-unittest.cc || phony/test/unittests/cppgc_unittests_sources.inputdeps
+  source_file_part = explicit-management-unittest.cc
+  source_name_part = explicit-management-unittest
+build obj/test/unittests/cppgc_unittests_sources/finalizer-trait-unittest.o: cxx ../../test/unittests/heap/cppgc/finalizer-trait-unittest.cc || phony/test/unittests/cppgc_unittests_sources.inputdeps
+  source_file_part = finalizer-trait-unittest.cc
+  source_name_part = finalizer-trait-unittest
+build obj/test/unittests/cppgc_unittests_sources/free-list-unittest.o: cxx ../../test/unittests/heap/cppgc/free-list-unittest.cc || phony/test/unittests/cppgc_unittests_sources.inputdeps
+  source_file_part = free-list-unittest.cc
+  source_name_part = free-list-unittest
+build obj/test/unittests/cppgc_unittests_sources/garbage-collected-unittest.o: cxx ../../test/unittests/heap/cppgc/garbage-collected-unittest.cc || phony/test/unittests/cppgc_unittests_sources.inputdeps
+  source_file_part = garbage-collected-unittest.cc
+  source_name_part = garbage-collected-unittest
+build obj/test/unittests/cppgc_unittests_sources/gc-info-unittest.o: cxx ../../test/unittests/heap/cppgc/gc-info-unittest.cc || phony/test/unittests/cppgc_unittests_sources.inputdeps
+  source_file_part = gc-info-unittest.cc
+  source_name_part = gc-info-unittest
+build obj/test/unittests/cppgc_unittests_sources/gc-invoker-unittest.o: cxx ../../test/unittests/heap/cppgc/gc-invoker-unittest.cc || phony/test/unittests/cppgc_unittests_sources.inputdeps
+  source_file_part = gc-invoker-unittest.cc
+  source_name_part = gc-invoker-unittest
+build obj/test/unittests/cppgc_unittests_sources/heap-growing-unittest.o: cxx ../../test/unittests/heap/cppgc/heap-growing-unittest.cc || phony/test/unittests/cppgc_unittests_sources.inputdeps
+  source_file_part = heap-growing-unittest.cc
+  source_name_part = heap-growing-unittest
+build obj/test/unittests/cppgc_unittests_sources/heap-object-header-unittest.o: cxx ../../test/unittests/heap/cppgc/heap-object-header-unittest.cc || phony/test/unittests/cppgc_unittests_sources.inputdeps
+  source_file_part = heap-object-header-unittest.cc
+  source_name_part = heap-object-header-unittest
+build obj/test/unittests/cppgc_unittests_sources/heap-page-unittest.o: cxx ../../test/unittests/heap/cppgc/heap-page-unittest.cc || phony/test/unittests/cppgc_unittests_sources.inputdeps
+  source_file_part = heap-page-unittest.cc
+  source_name_part = heap-page-unittest
+build obj/test/unittests/cppgc_unittests_sources/heap-registry-unittest.o: cxx ../../test/unittests/heap/cppgc/heap-registry-unittest.cc || phony/test/unittests/cppgc_unittests_sources.inputdeps
+  source_file_part = heap-registry-unittest.cc
+  source_name_part = heap-registry-unittest
+build obj/test/unittests/cppgc_unittests_sources/heap-statistics-collector-unittest.o: cxx ../../test/unittests/heap/cppgc/heap-statistics-collector-unittest.cc || phony/test/unittests/cppgc_unittests_sources.inputdeps
+  source_file_part = heap-statistics-collector-unittest.cc
+  source_name_part = heap-statistics-collector-unittest
+build obj/test/unittests/cppgc_unittests_sources/heap-unittest.o: cxx ../../test/unittests/heap/cppgc/heap-unittest.cc || phony/test/unittests/cppgc_unittests_sources.inputdeps
+  source_file_part = heap-unittest.cc
+  source_name_part = heap-unittest
+build obj/test/unittests/cppgc_unittests_sources/liveness-broker-unittest.o: cxx ../../test/unittests/heap/cppgc/liveness-broker-unittest.cc || phony/test/unittests/cppgc_unittests_sources.inputdeps
+  source_file_part = liveness-broker-unittest.cc
+  source_name_part = liveness-broker-unittest
+build obj/test/unittests/cppgc_unittests_sources/logging-unittest.o: cxx ../../test/unittests/heap/cppgc/logging-unittest.cc || phony/test/unittests/cppgc_unittests_sources.inputdeps
+  source_file_part = logging-unittest.cc
+  source_name_part = logging-unittest
+build obj/test/unittests/cppgc_unittests_sources/marker-unittest.o: cxx ../../test/unittests/heap/cppgc/marker-unittest.cc || phony/test/unittests/cppgc_unittests_sources.inputdeps
+  source_file_part = marker-unittest.cc
+  source_name_part = marker-unittest
+build obj/test/unittests/cppgc_unittests_sources/marking-verifier-unittest.o: cxx ../../test/unittests/heap/cppgc/marking-verifier-unittest.cc || phony/test/unittests/cppgc_unittests_sources.inputdeps
+  source_file_part = marking-verifier-unittest.cc
+  source_name_part = marking-verifier-unittest
+build obj/test/unittests/cppgc_unittests_sources/marking-visitor-unittest.o: cxx ../../test/unittests/heap/cppgc/marking-visitor-unittest.cc || phony/test/unittests/cppgc_unittests_sources.inputdeps
+  source_file_part = marking-visitor-unittest.cc
+  source_name_part = marking-visitor-unittest
+build obj/test/unittests/cppgc_unittests_sources/member-unittest.o: cxx ../../test/unittests/heap/cppgc/member-unittest.cc || phony/test/unittests/cppgc_unittests_sources.inputdeps
+  source_file_part = member-unittest.cc
+  source_name_part = member-unittest
+build obj/test/unittests/cppgc_unittests_sources/metric-recorder-unittest.o: cxx ../../test/unittests/heap/cppgc/metric-recorder-unittest.cc || phony/test/unittests/cppgc_unittests_sources.inputdeps
+  source_file_part = metric-recorder-unittest.cc
+  source_name_part = metric-recorder-unittest
+build obj/test/unittests/cppgc_unittests_sources/minor-gc-unittest.o: cxx ../../test/unittests/heap/cppgc/minor-gc-unittest.cc || phony/test/unittests/cppgc_unittests_sources.inputdeps
+  source_file_part = minor-gc-unittest.cc
+  source_name_part = minor-gc-unittest
+build obj/test/unittests/cppgc_unittests_sources/name-trait-unittest.o: cxx ../../test/unittests/heap/cppgc/name-trait-unittest.cc || phony/test/unittests/cppgc_unittests_sources.inputdeps
+  source_file_part = name-trait-unittest.cc
+  source_name_part = name-trait-unittest
+build obj/test/unittests/cppgc_unittests_sources/object-size-trait-unittest.o: cxx ../../test/unittests/heap/cppgc/object-size-trait-unittest.cc || phony/test/unittests/cppgc_unittests_sources.inputdeps
+  source_file_part = object-size-trait-unittest.cc
+  source_name_part = object-size-trait-unittest
+build obj/test/unittests/cppgc_unittests_sources/object-start-bitmap-unittest.o: cxx ../../test/unittests/heap/cppgc/object-start-bitmap-unittest.cc || phony/test/unittests/cppgc_unittests_sources.inputdeps
+  source_file_part = object-start-bitmap-unittest.cc
+  source_name_part = object-start-bitmap-unittest
+build obj/test/unittests/cppgc_unittests_sources/page-memory-unittest.o: cxx ../../test/unittests/heap/cppgc/page-memory-unittest.cc || phony/test/unittests/cppgc_unittests_sources.inputdeps
+  source_file_part = page-memory-unittest.cc
+  source_name_part = page-memory-unittest
+build obj/test/unittests/cppgc_unittests_sources/persistent-family-unittest.o: cxx ../../test/unittests/heap/cppgc/persistent-family-unittest.cc || phony/test/unittests/cppgc_unittests_sources.inputdeps
+  source_file_part = persistent-family-unittest.cc
+  source_name_part = persistent-family-unittest
+build obj/test/unittests/cppgc_unittests_sources/platform-unittest.o: cxx ../../test/unittests/heap/cppgc/platform-unittest.cc || phony/test/unittests/cppgc_unittests_sources.inputdeps
+  source_file_part = platform-unittest.cc
+  source_name_part = platform-unittest
+build obj/test/unittests/cppgc_unittests_sources/prefinalizer-unittest.o: cxx ../../test/unittests/heap/cppgc/prefinalizer-unittest.cc || phony/test/unittests/cppgc_unittests_sources.inputdeps
+  source_file_part = prefinalizer-unittest.cc
+  source_name_part = prefinalizer-unittest
+build obj/test/unittests/cppgc_unittests_sources/sanitizer-unittest.o: cxx ../../test/unittests/heap/cppgc/sanitizer-unittest.cc || phony/test/unittests/cppgc_unittests_sources.inputdeps
+  source_file_part = sanitizer-unittest.cc
+  source_name_part = sanitizer-unittest
+build obj/test/unittests/cppgc_unittests_sources/source-location-unittest.o: cxx ../../test/unittests/heap/cppgc/source-location-unittest.cc || phony/test/unittests/cppgc_unittests_sources.inputdeps
+  source_file_part = source-location-unittest.cc
+  source_name_part = source-location-unittest
+build obj/test/unittests/cppgc_unittests_sources/stack-unittest.o: cxx ../../test/unittests/heap/cppgc/stack-unittest.cc || phony/test/unittests/cppgc_unittests_sources.inputdeps
+  source_file_part = stack-unittest.cc
+  source_name_part = stack-unittest
+build obj/test/unittests/cppgc_unittests_sources/stats-collector-scopes-unittest.o: cxx ../../test/unittests/heap/cppgc/stats-collector-scopes-unittest.cc || phony/test/unittests/cppgc_unittests_sources.inputdeps
+  source_file_part = stats-collector-scopes-unittest.cc
+  source_name_part = stats-collector-scopes-unittest
+build obj/test/unittests/cppgc_unittests_sources/stats-collector-unittest.o: cxx ../../test/unittests/heap/cppgc/stats-collector-unittest.cc || phony/test/unittests/cppgc_unittests_sources.inputdeps
+  source_file_part = stats-collector-unittest.cc
+  source_name_part = stats-collector-unittest
+build obj/test/unittests/cppgc_unittests_sources/sweeper-unittest.o: cxx ../../test/unittests/heap/cppgc/sweeper-unittest.cc || phony/test/unittests/cppgc_unittests_sources.inputdeps
+  source_file_part = sweeper-unittest.cc
+  source_name_part = sweeper-unittest
+build obj/test/unittests/cppgc_unittests_sources/test-platform.o: cxx ../../test/unittests/heap/cppgc/test-platform.cc || phony/test/unittests/cppgc_unittests_sources.inputdeps
+  source_file_part = test-platform.cc
+  source_name_part = test-platform
+build obj/test/unittests/cppgc_unittests_sources/testing-unittest.o: cxx ../../test/unittests/heap/cppgc/testing-unittest.cc || phony/test/unittests/cppgc_unittests_sources.inputdeps
+  source_file_part = testing-unittest.cc
+  source_name_part = testing-unittest
+build obj/test/unittests/cppgc_unittests_sources/tests.o: cxx ../../test/unittests/heap/cppgc/tests.cc || phony/test/unittests/cppgc_unittests_sources.inputdeps
+  source_file_part = tests.cc
+  source_name_part = tests
+build obj/test/unittests/cppgc_unittests_sources/visitor-unittest.o: cxx ../../test/unittests/heap/cppgc/visitor-unittest.cc || phony/test/unittests/cppgc_unittests_sources.inputdeps
+  source_file_part = visitor-unittest.cc
+  source_name_part = visitor-unittest
+build obj/test/unittests/cppgc_unittests_sources/weak-container-unittest.o: cxx ../../test/unittests/heap/cppgc/weak-container-unittest.cc || phony/test/unittests/cppgc_unittests_sources.inputdeps
+  source_file_part = weak-container-unittest.cc
+  source_name_part = weak-container-unittest
+build obj/test/unittests/cppgc_unittests_sources/workloads-unittest.o: cxx ../../test/unittests/heap/cppgc/workloads-unittest.cc || phony/test/unittests/cppgc_unittests_sources.inputdeps
+  source_file_part = workloads-unittest.cc
+  source_name_part = workloads-unittest
+build obj/test/unittests/cppgc_unittests_sources/write-barrier-unittest.o: cxx ../../test/unittests/heap/cppgc/write-barrier-unittest.cc || phony/test/unittests/cppgc_unittests_sources.inputdeps
+  source_file_part = write-barrier-unittest.cc
+  source_name_part = write-barrier-unittest
+
+build phony/test/unittests/cppgc_unittests_sources: phony obj/test/unittests/cppgc_unittests_sources/allocation-unittest.o obj/test/unittests/cppgc_unittests_sources/caged-heap-unittest.o obj/test/unittests/cppgc_unittests_sources/compactor-unittest.o obj/test/unittests/cppgc_unittests_sources/concurrent-marking-unittest.o obj/test/unittests/cppgc_unittests_sources/concurrent-sweeper-unittest.o obj/test/unittests/cppgc_unittests_sources/cross-thread-persistent-unittest.o obj/test/unittests/cppgc_unittests_sources/custom-spaces-unittest.o obj/test/unittests/cppgc_unittests_sources/ephemeron-pair-unittest.o obj/test/unittests/cppgc_unittests_sources/explicit-management-unittest.o obj/test/unittests/cppgc_unittests_sources/finalizer-trait-unittest.o obj/test/unittests/cppgc_unittests_sources/free-list-unittest.o obj/test/unittests/cppgc_unittests_sources/garbage-collected-unittest.o obj/test/unittests/cppgc_unittests_sources/gc-info-unittest.o obj/test/unittests/cppgc_unittests_sources/gc-invoker-unittest.o obj/test/unittests/cppgc_unittests_sources/heap-growing-unittest.o obj/test/unittests/cppgc_unittests_sources/heap-object-header-unittest.o obj/test/unittests/cppgc_unittests_sources/heap-page-unittest.o obj/test/unittests/cppgc_unittests_sources/heap-registry-unittest.o obj/test/unittests/cppgc_unittests_sources/heap-statistics-collector-unittest.o obj/test/unittests/cppgc_unittests_sources/heap-unittest.o obj/test/unittests/cppgc_unittests_sources/liveness-broker-unittest.o obj/test/unittests/cppgc_unittests_sources/logging-unittest.o obj/test/unittests/cppgc_unittests_sources/marker-unittest.o obj/test/unittests/cppgc_unittests_sources/marking-verifier-unittest.o obj/test/unittests/cppgc_unittests_sources/marking-visitor-unittest.o obj/test/unittests/cppgc_unittests_sources/member-unittest.o obj/test/unittests/cppgc_unittests_sources/metric-recorder-unittest.o obj/test/unittests/cppgc_unittests_sources/minor-gc-unittest.o obj/test/unittests/cppgc_unittests_sources/name-trait-unittest.o obj/test/unittests/cppgc_unittests_sources/object-size-trait-unittest.o obj/test/unittests/cppgc_unittests_sources/object-start-bitmap-unittest.o obj/test/unittests/cppgc_unittests_sources/page-memory-unittest.o obj/test/unittests/cppgc_unittests_sources/persistent-family-unittest.o obj/test/unittests/cppgc_unittests_sources/platform-unittest.o obj/test/unittests/cppgc_unittests_sources/prefinalizer-unittest.o obj/test/unittests/cppgc_unittests_sources/sanitizer-unittest.o obj/test/unittests/cppgc_unittests_sources/source-location-unittest.o obj/test/unittests/cppgc_unittests_sources/stack-unittest.o obj/test/unittests/cppgc_unittests_sources/stats-collector-scopes-unittest.o obj/test/unittests/cppgc_unittests_sources/stats-collector-unittest.o obj/test/unittests/cppgc_unittests_sources/sweeper-unittest.o obj/test/unittests/cppgc_unittests_sources/test-platform.o obj/test/unittests/cppgc_unittests_sources/testing-unittest.o obj/test/unittests/cppgc_unittests_sources/tests.o obj/test/unittests/cppgc_unittests_sources/visitor-unittest.o obj/test/unittests/cppgc_unittests_sources/weak-container-unittest.o obj/test/unittests/cppgc_unittests_sources/workloads-unittest.o obj/test/unittests/cppgc_unittests_sources/write-barrier-unittest.o || phony/testing/gmock/gmock obj/testing/gtest/libgtest.a phony/v8_for_testing phony/third_party/googletest/gmock phony/third_party/googletest/gtest phony/torque_base obj/libv8_libbase.a phony/libm phony/v8_flags phony/v8_shared_internal_headers phony/v8_headers phony/cppgc_headers obj/libv8_libplatform.a phony/torque_ls_base phony/v8_base_without_compiler phony/cppgc_base phony/v8_heap_base phony/v8_heap_base_headers phony/third_party/abseil-cpp/absl phony/third_party/abseil-cpp/absl/base/base phony/third_party/abseil-cpp/absl/base/log_severity phony/third_party/abseil-cpp/absl/base/raw_logging_internal phony/third_party/abseil-cpp/absl/base/spinlock_wait phony/third_party/abseil-cpp/absl/container/btree phony/third_party/abseil-cpp/absl/container/common phony/third_party/abseil-cpp/absl/types/optional phony/third_party/abseil-cpp/absl/types/bad_optional_access phony/third_party/abseil-cpp/absl/container/layout phony/third_party/abseil-cpp/absl/debugging/demangle_internal phony/third_party/abseil-cpp/absl/debugging/demangle_rust phony/third_party/abseil-cpp/absl/debugging/decode_rust_punycode phony/third_party/abseil-cpp/absl/debugging/utf8_for_code_point phony/third_party/abseil-cpp/absl/strings/strings phony/third_party/abseil-cpp/absl/strings/string_view phony/third_party/abseil-cpp/absl/base/throw_delegate phony/third_party/abseil-cpp/absl/strings/charset phony/third_party/abseil-cpp/absl/strings/internal phony/third_party/abseil-cpp/absl/base/endian phony/third_party/abseil-cpp/absl/numeric/int128 phony/third_party/abseil-cpp/absl/types/span phony/third_party/abseil-cpp/absl/strings/cord phony/third_party/abseil-cpp/absl/strings/cord_internal phony/third_party/abseil-cpp/absl/container/inlined_vector phony/third_party/abseil-cpp/absl/container/inlined_vector_internal phony/third_party/abseil-cpp/absl/crc/crc_cord_state phony/third_party/abseil-cpp/absl/crc/crc32c phony/third_party/abseil-cpp/absl/crc/cpu_detect phony/third_party/abseil-cpp/absl/crc/crc_internal phony/third_party/abseil-cpp/absl/strings/str_format phony/third_party/abseil-cpp/absl/strings/str_format_internal phony/third_party/abseil-cpp/absl/container/fixed_array phony/third_party/abseil-cpp/absl/strings/cordz_functions phony/third_party/abseil-cpp/absl/profiling/exponential_biased phony/third_party/abseil-cpp/absl/strings/cordz_info phony/third_party/abseil-cpp/absl/strings/cordz_handle phony/third_party/abseil-cpp/absl/synchronization/synchronization phony/third_party/abseil-cpp/absl/synchronization/graphcycles_internal phony/third_party/abseil-cpp/absl/base/malloc_internal phony/third_party/abseil-cpp/absl/synchronization/kernel_timeout_internal phony/third_party/abseil-cpp/absl/time/time phony/third_party/abseil-cpp/absl/time/internal/cctz/civil_time phony/third_party/abseil-cpp/absl/time/internal/cctz/time_zone phony/third_party/abseil-cpp/absl/base/tracing_internal phony/third_party/abseil-cpp/absl/debugging/stacktrace phony/third_party/abseil-cpp/absl/debugging/debugging_internal phony/third_party/abseil-cpp/absl/debugging/symbolize phony/third_party/abseil-cpp/absl/strings/cordz_update_scope phony/third_party/abseil-cpp/absl/container/flat_hash_map phony/third_party/abseil-cpp/absl/container/hash_container_defaults phony/third_party/abseil-cpp/absl/container/hash_function_defaults phony/third_party/abseil-cpp/absl/hash/hash phony/third_party/abseil-cpp/absl/hash/city phony/third_party/abseil-cpp/absl/hash/low_level_hash phony/third_party/abseil-cpp/absl/types/variant phony/third_party/abseil-cpp/absl/types/bad_variant_access phony/third_party/abseil-cpp/absl/container/raw_hash_map phony/third_party/abseil-cpp/absl/container/raw_hash_set phony/third_party/abseil-cpp/absl/container/hashtablez_sampler phony/third_party/abseil-cpp/absl/profiling/sample_recorder phony/third_party/abseil-cpp/absl/container/flat_hash_set phony/third_party/abseil-cpp/absl/container/node_hash_map phony/third_party/abseil-cpp/absl/container/node_hash_set phony/third_party/abseil-cpp/absl/debugging/failure_signal_handler phony/third_party/abseil-cpp/absl/debugging/examine_stack phony/third_party/abseil-cpp/absl/log/absl_check phony/third_party/abseil-cpp/absl/log/internal/check_impl phony/third_party/abseil-cpp/absl/log/internal/check_op phony/third_party/abseil-cpp/absl/log/internal/nullguard phony/third_party/abseil-cpp/absl/log/internal/nullstream phony/third_party/abseil-cpp/absl/log/internal/strip phony/third_party/abseil-cpp/absl/log/internal/log_message phony/third_party/abseil-cpp/absl/log/internal/append_truncated phony/third_party/abseil-cpp/absl/log/internal/format phony/third_party/abseil-cpp/absl/log/internal/globals phony/third_party/abseil-cpp/absl/log/internal/log_sink_set phony/third_party/abseil-cpp/absl/log/globals phony/third_party/abseil-cpp/absl/log/internal/vlog_config phony/third_party/abseil-cpp/absl/log/internal/fnmatch phony/third_party/abseil-cpp/absl/log/log_entry phony/third_party/abseil-cpp/absl/log/log_sink phony/third_party/abseil-cpp/absl/log/internal/proto phony/third_party/abseil-cpp/absl/base/strerror phony/third_party/abseil-cpp/absl/log/log_sink_registry phony/third_party/abseil-cpp/absl/log/internal/conditions phony/third_party/abseil-cpp/absl/log/absl_log phony/third_party/abseil-cpp/absl/log/internal/log_impl phony/third_party/abseil-cpp/absl/log/absl_vlog_is_on phony/third_party/abseil-cpp/absl/log/die_if_null phony/third_party/abseil-cpp/absl/log/log phony/third_party/abseil-cpp/absl/log/vlog_is_on phony/third_party/abseil-cpp/absl/log/initialize phony/third_party/abseil-cpp/absl/random/random phony/third_party/abseil-cpp/absl/random/distributions phony/third_party/abseil-cpp/absl/random/internal/fast_uniform_bits phony/third_party/abseil-cpp/absl/random/internal/traits phony/third_party/abseil-cpp/absl/random/internal/generate_real phony/third_party/abseil-cpp/absl/random/internal/iostream_state_saver phony/third_party/abseil-cpp/absl/random/internal/uniform_helper phony/third_party/abseil-cpp/absl/random/internal/wide_multiply phony/third_party/abseil-cpp/absl/random/seed_sequences phony/third_party/abseil-cpp/absl/random/seed_gen_exception phony/third_party/abseil-cpp/absl/random/internal/pool_urbg phony/third_party/abseil-cpp/absl/random/internal/randen phony/third_party/abseil-cpp/absl/random/internal/platform phony/third_party/abseil-cpp/absl/random/internal/randen_hwaes phony/third_party/abseil-cpp/absl/random/internal/randen_hwaes_impl phony/third_party/abseil-cpp/absl/random/internal/randen_slow phony/third_party/abseil-cpp/absl/random/internal/seed_material phony/third_party/abseil-cpp/absl/random/internal/salted_seed_seq phony/third_party/abseil-cpp/absl/random/internal/nonsecure_base phony/third_party/abseil-cpp/absl/random/internal/pcg_engine phony/third_party/abseil-cpp/absl/random/internal/randen_engine phony/third_party/abseil-cpp/absl/status/status phony/third_party/abseil-cpp/absl/status/statusor phony/v8_internal_headers obj/third_party/icu/libicui18n.a obj/third_party/icu/libicuuc.a phony/torque_generated_definitions phony/v8_bigint phony/src/inspector/inspector phony/src/inspector/inspector_test_headers phony/src/inspector/inspector_string_conversions phony/third_party/inspector_protocol/crdtp phony/third_party/inspector_protocol/crdtp_platform obj/third_party/zlib/libchrome_zlib.a phony/third_party/zlib/zlib_adler32_simd phony/third_party/zlib/zlib_inflate_chunk_simd phony/third_party/zlib/zlib_crc32_simd obj/third_party/zlib/google/libcompression_utils_portable.a phony/v8_compiler phony/v8_snapshot phony/v8_initializers phony/torque_generated_initializers

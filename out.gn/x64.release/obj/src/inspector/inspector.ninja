@@ -1,0 +1,119 @@
+defines = -DUSE_UDEV -DUSE_AURA=1 -DUSE_GLIB=1 -DUSE_OZONE=1 -D__STDC_CONSTANT_MACROS -D__STDC_FORMAT_MACROS -D_FORTIFY_SOURCE=2 -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE -D_GNU_SOURCE -DCR_CLANG_REVISION=\"llvmorg-20-init-9764-gb81d8e90-1\" -D_LIBCPP_HARDENING_MODE=_LIBCPP_HARDENING_MODE_EXTENSIVE -D_LIBCPP_DISABLE_VISIBILITY_ANNOTATIONS -D_LIBCXXABI_DISABLE_VISIBILITY_ANNOTATIONS -DCR_LIBCXX_REVISION=c8eec3629a9e1164a97a5202e40efb4ec4d148e1 -DTMP_REBUILD_HACK -DCR_SYSROOT_KEY=20230611T210420Z-2 -DNDEBUG -DNVALGRIND -DDYNAMIC_ANNOTATIONS_ENABLED=0 -DV8_TYPED_ARRAY_MAX_SIZE_IN_HEAP=64 -DENABLE_GDB_JIT_INTERFACE -DV8_INTL_SUPPORT -DV8_USE_EXTERNAL_STARTUP_DATA -DV8_ATOMIC_OBJECT_FIELD_WRITES -DV8_ENABLE_LAZY_SOURCE_POSITIONS -DV8_SHARED_RO_HEAP -DV8_WIN64_UNWINDING_INFO -DV8_ENABLE_REGEXP_INTERPRETER_THREADED_DISPATCH -DV8_ENABLE_FUZZTEST -DV8_SHORT_BUILTIN_CALLS -DV8_EXTERNAL_CODE_SPACE -DV8_ENABLE_SPARKPLUG -DV8_ENABLE_MAGLEV -DV8_ENABLE_TURBOFAN -DV8_ENABLE_WEBASSEMBLY -DV8_ENABLE_CONTINUATION_PRESERVED_EMBEDDER_DATA -DV8_ALLOCATION_FOLDING -DV8_ALLOCATION_SITE_TRACKING -DV8_ADVANCED_BIGINT_ALGORITHMS -DV8_STATIC_ROOTS -DV8_USE_ZLIB -DV8_USE_LIBM_TRIG_FUNCTIONS -DV8_ENABLE_WASM_SIMD256_REVEC -DV8_ENABLE_MAGLEV_GRAPH_PRINTER -DV8_ENABLE_BUILTIN_JUMP_TABLE_SWITCH -DV8_ENABLE_EXTENSIBLE_RO_SNAPSHOT -DV8_ENABLE_BLACK_ALLOCATED_PAGES -DV8_WASM_RANDOM_FUZZERS -DV8_ARRAY_BUFFER_INTERNAL_FIELD_COUNT=0 -DV8_ARRAY_BUFFER_VIEW_INTERNAL_FIELD_COUNT=0 -DV8_PROMISE_INTERNAL_FIELD_COUNT=0 -DV8_COMPRESS_POINTERS -DV8_COMPRESS_POINTERS_IN_SHARED_CAGE -DV8_31BIT_SMIS_ON_64BIT_ARCH -DV8_ENABLE_SANDBOX -DV8_DEPRECATION_WARNINGS -DV8_IMMINENT_DEPRECATION_WARNINGS -DV8_HAVE_TARGET_OS -DV8_TARGET_OS_LINUX -DCPPGC_CAGED_HEAP -DCPPGC_YOUNG_GENERATION -DCPPGC_POINTER_COMPRESSION -DCPPGC_ENABLE_LARGER_CAGE -DCPPGC_SLIM_WRITE_BARRIER -DV8_TARGET_ARCH_X64 -DV8_RUNTIME_CALL_STATS
+include_dirs = -I../.. -Igen -I../../buildtools/third_party/libc++ -I../../include -Igen/include
+cflags = -Wall -Wextra -Wimplicit-fallthrough -Wextra-semi -Wunreachable-code-aggressive -Wthread-safety -Wno-missing-field-initializers -Wno-unused-parameter -Wno-psabi -Wloop-analysis -Wno-unneeded-internal-declaration -Wno-cast-function-type -Wno-thread-safety-reference-return -Wshadow -Werror -fno-delete-null-pointer-checks -fno-ident -fno-strict-aliasing -fstack-protector -funwind-tables -fPIC -pthread -fcolor-diagnostics -fmerge-all-constants -fno-sized-deallocation -fcrash-diagnostics-dir=../../tools/clang/crashreports -mllvm -instcombine-lower-dbg-declare=0 -mllvm -split-threshold-for-reg-with-hint=0 -ffp-contract=off -Wa,--crel,--allow-experimental-crel -fcomplete-member-pointers -m64 -msse3 -Wno-builtin-macro-redefined -D__DATE__= -D__TIME__= -D__TIMESTAMP__= -ffile-compilation-dir=. -no-canonical-prefixes -fno-omit-frame-pointer -g0 -fvisibility=hidden -Wheader-hygiene -Wstring-conversion -Wtautological-overlap-compare -Wunreachable-code -Wno-shadow -Wctad-maybe-unsupported -Wno-invalid-offsetof -Wshorten-64-to-32 -Wmissing-field-initializers -O3 -fdata-sections -ffunction-sections -fno-unique-section-names -fno-math-errno -Wexit-time-destructors
+cflags_cc = -Wno-invalid-offsetof -Wenum-compare-conditional -Wno-c++11-narrowing-const-reference -Wno-missing-template-arg-list-after-template-kw -Wno-dangling-assignment-gsl -std=c++20 -Wno-trigraphs -gsimple-template-names -fno-exceptions -fno-rtti -nostdinc++ -isystem../../third_party/libc++/src/include -isystem../../third_party/libc++abi/src/include --sysroot=../../build/linux/debian_bullseye_amd64-sysroot -fvisibility-inlines-hidden
+label_name = inspector
+target_out_dir = obj/src/inspector
+target_output_name = inspector
+
+build phony/src/inspector/inspector.inputdeps: phony phony/generate_bytecode_builtins_list phony/run_torque phony/build/chromeos_buildflags phony/src/inspector/protocol_generated_sources phony/third_party/icu/copy_icudata
+build obj/src/inspector/inspector/Protocol.o: cxx gen/src/inspector/protocol/Protocol.cpp || phony/src/inspector/inspector.inputdeps
+  source_file_part = Protocol.cpp
+  source_name_part = Protocol
+build obj/src/inspector/inspector/Console.o: cxx gen/src/inspector/protocol/Console.cpp || phony/src/inspector/inspector.inputdeps
+  source_file_part = Console.cpp
+  source_name_part = Console
+build obj/src/inspector/inspector/Debugger.o: cxx gen/src/inspector/protocol/Debugger.cpp || phony/src/inspector/inspector.inputdeps
+  source_file_part = Debugger.cpp
+  source_name_part = Debugger
+build obj/src/inspector/inspector/HeapProfiler.o: cxx gen/src/inspector/protocol/HeapProfiler.cpp || phony/src/inspector/inspector.inputdeps
+  source_file_part = HeapProfiler.cpp
+  source_name_part = HeapProfiler
+build obj/src/inspector/inspector/Profiler.o: cxx gen/src/inspector/protocol/Profiler.cpp || phony/src/inspector/inspector.inputdeps
+  source_file_part = Profiler.cpp
+  source_name_part = Profiler
+build obj/src/inspector/inspector/Runtime.o: cxx gen/src/inspector/protocol/Runtime.cpp || phony/src/inspector/inspector.inputdeps
+  source_file_part = Runtime.cpp
+  source_name_part = Runtime
+build obj/src/inspector/inspector/Schema.o: cxx gen/src/inspector/protocol/Schema.cpp || phony/src/inspector/inspector.inputdeps
+  source_file_part = Schema.cpp
+  source_name_part = Schema
+build obj/src/inspector/inspector/crc32.o: cxx ../../src/inspector/crc32.cc || phony/src/inspector/inspector.inputdeps
+  source_file_part = crc32.cc
+  source_name_part = crc32
+build obj/src/inspector/inspector/custom-preview.o: cxx ../../src/inspector/custom-preview.cc || phony/src/inspector/inspector.inputdeps
+  source_file_part = custom-preview.cc
+  source_name_part = custom-preview
+build obj/src/inspector/inspector/injected-script.o: cxx ../../src/inspector/injected-script.cc || phony/src/inspector/inspector.inputdeps
+  source_file_part = injected-script.cc
+  source_name_part = injected-script
+build obj/src/inspector/inspector/inspected-context.o: cxx ../../src/inspector/inspected-context.cc || phony/src/inspector/inspector.inputdeps
+  source_file_part = inspected-context.cc
+  source_name_part = inspected-context
+build obj/src/inspector/inspector/remote-object-id.o: cxx ../../src/inspector/remote-object-id.cc || phony/src/inspector/inspector.inputdeps
+  source_file_part = remote-object-id.cc
+  source_name_part = remote-object-id
+build obj/src/inspector/inspector/search-util.o: cxx ../../src/inspector/search-util.cc || phony/src/inspector/inspector.inputdeps
+  source_file_part = search-util.cc
+  source_name_part = search-util
+build obj/src/inspector/inspector/string-16.o: cxx ../../src/inspector/string-16.cc || phony/src/inspector/inspector.inputdeps
+  source_file_part = string-16.cc
+  source_name_part = string-16
+build obj/src/inspector/inspector/string-util.o: cxx ../../src/inspector/string-util.cc || phony/src/inspector/inspector.inputdeps
+  source_file_part = string-util.cc
+  source_name_part = string-util
+build obj/src/inspector/inspector/test-interface.o: cxx ../../src/inspector/test-interface.cc || phony/src/inspector/inspector.inputdeps
+  source_file_part = test-interface.cc
+  source_name_part = test-interface
+build obj/src/inspector/inspector/v8-console-agent-impl.o: cxx ../../src/inspector/v8-console-agent-impl.cc || phony/src/inspector/inspector.inputdeps
+  source_file_part = v8-console-agent-impl.cc
+  source_name_part = v8-console-agent-impl
+build obj/src/inspector/inspector/v8-console-message.o: cxx ../../src/inspector/v8-console-message.cc || phony/src/inspector/inspector.inputdeps
+  source_file_part = v8-console-message.cc
+  source_name_part = v8-console-message
+build obj/src/inspector/inspector/v8-console.o: cxx ../../src/inspector/v8-console.cc || phony/src/inspector/inspector.inputdeps
+  source_file_part = v8-console.cc
+  source_name_part = v8-console
+build obj/src/inspector/inspector/v8-debugger-agent-impl.o: cxx ../../src/inspector/v8-debugger-agent-impl.cc || phony/src/inspector/inspector.inputdeps
+  source_file_part = v8-debugger-agent-impl.cc
+  source_name_part = v8-debugger-agent-impl
+build obj/src/inspector/inspector/v8-debugger-barrier.o: cxx ../../src/inspector/v8-debugger-barrier.cc || phony/src/inspector/inspector.inputdeps
+  source_file_part = v8-debugger-barrier.cc
+  source_name_part = v8-debugger-barrier
+build obj/src/inspector/inspector/v8-debugger-id.o: cxx ../../src/inspector/v8-debugger-id.cc || phony/src/inspector/inspector.inputdeps
+  source_file_part = v8-debugger-id.cc
+  source_name_part = v8-debugger-id
+build obj/src/inspector/inspector/v8-debugger-script.o: cxx ../../src/inspector/v8-debugger-script.cc || phony/src/inspector/inspector.inputdeps
+  source_file_part = v8-debugger-script.cc
+  source_name_part = v8-debugger-script
+build obj/src/inspector/inspector/v8-debugger.o: cxx ../../src/inspector/v8-debugger.cc || phony/src/inspector/inspector.inputdeps
+  source_file_part = v8-debugger.cc
+  source_name_part = v8-debugger
+build obj/src/inspector/inspector/v8-deep-serializer.o: cxx ../../src/inspector/v8-deep-serializer.cc || phony/src/inspector/inspector.inputdeps
+  source_file_part = v8-deep-serializer.cc
+  source_name_part = v8-deep-serializer
+build obj/src/inspector/inspector/v8-heap-profiler-agent-impl.o: cxx ../../src/inspector/v8-heap-profiler-agent-impl.cc || phony/src/inspector/inspector.inputdeps
+  source_file_part = v8-heap-profiler-agent-impl.cc
+  source_name_part = v8-heap-profiler-agent-impl
+build obj/src/inspector/inspector/v8-inspector-impl.o: cxx ../../src/inspector/v8-inspector-impl.cc || phony/src/inspector/inspector.inputdeps
+  source_file_part = v8-inspector-impl.cc
+  source_name_part = v8-inspector-impl
+build obj/src/inspector/inspector/v8-inspector-session-impl.o: cxx ../../src/inspector/v8-inspector-session-impl.cc || phony/src/inspector/inspector.inputdeps
+  source_file_part = v8-inspector-session-impl.cc
+  source_name_part = v8-inspector-session-impl
+build obj/src/inspector/inspector/v8-profiler-agent-impl.o: cxx ../../src/inspector/v8-profiler-agent-impl.cc || phony/src/inspector/inspector.inputdeps
+  source_file_part = v8-profiler-agent-impl.cc
+  source_name_part = v8-profiler-agent-impl
+build obj/src/inspector/inspector/v8-regex.o: cxx ../../src/inspector/v8-regex.cc || phony/src/inspector/inspector.inputdeps
+  source_file_part = v8-regex.cc
+  source_name_part = v8-regex
+build obj/src/inspector/inspector/v8-runtime-agent-impl.o: cxx ../../src/inspector/v8-runtime-agent-impl.cc || phony/src/inspector/inspector.inputdeps
+  source_file_part = v8-runtime-agent-impl.cc
+  source_name_part = v8-runtime-agent-impl
+build obj/src/inspector/inspector/v8-schema-agent-impl.o: cxx ../../src/inspector/v8-schema-agent-impl.cc || phony/src/inspector/inspector.inputdeps
+  source_file_part = v8-schema-agent-impl.cc
+  source_name_part = v8-schema-agent-impl
+build obj/src/inspector/inspector/v8-serialization-duplicate-tracker.o: cxx ../../src/inspector/v8-serialization-duplicate-tracker.cc || phony/src/inspector/inspector.inputdeps
+  source_file_part = v8-serialization-duplicate-tracker.cc
+  source_name_part = v8-serialization-duplicate-tracker
+build obj/src/inspector/inspector/v8-stack-trace-impl.o: cxx ../../src/inspector/v8-stack-trace-impl.cc || phony/src/inspector/inspector.inputdeps
+  source_file_part = v8-stack-trace-impl.cc
+  source_name_part = v8-stack-trace-impl
+build obj/src/inspector/inspector/v8-value-utils.o: cxx ../../src/inspector/v8-value-utils.cc || phony/src/inspector/inspector.inputdeps
+  source_file_part = v8-value-utils.cc
+  source_name_part = v8-value-utils
+build obj/src/inspector/inspector/value-mirror.o: cxx ../../src/inspector/value-mirror.cc || phony/src/inspector/inspector.inputdeps
+  source_file_part = value-mirror.cc
+  source_name_part = value-mirror
+
+build phony/src/inspector/inspector: phony obj/src/inspector/inspector/Protocol.o obj/src/inspector/inspector/Console.o obj/src/inspector/inspector/Debugger.o obj/src/inspector/inspector/HeapProfiler.o obj/src/inspector/inspector/Profiler.o obj/src/inspector/inspector/Runtime.o obj/src/inspector/inspector/Schema.o obj/src/inspector/inspector/crc32.o obj/src/inspector/inspector/custom-preview.o obj/src/inspector/inspector/injected-script.o obj/src/inspector/inspector/inspected-context.o obj/src/inspector/inspector/remote-object-id.o obj/src/inspector/inspector/search-util.o obj/src/inspector/inspector/string-16.o obj/src/inspector/inspector/string-util.o obj/src/inspector/inspector/test-interface.o obj/src/inspector/inspector/v8-console-agent-impl.o obj/src/inspector/inspector/v8-console-message.o obj/src/inspector/inspector/v8-console.o obj/src/inspector/inspector/v8-debugger-agent-impl.o obj/src/inspector/inspector/v8-debugger-barrier.o obj/src/inspector/inspector/v8-debugger-id.o obj/src/inspector/inspector/v8-debugger-script.o obj/src/inspector/inspector/v8-debugger.o obj/src/inspector/inspector/v8-deep-serializer.o obj/src/inspector/inspector/v8-heap-profiler-agent-impl.o obj/src/inspector/inspector/v8-inspector-impl.o obj/src/inspector/inspector/v8-inspector-session-impl.o obj/src/inspector/inspector/v8-profiler-agent-impl.o obj/src/inspector/inspector/v8-regex.o obj/src/inspector/inspector/v8-runtime-agent-impl.o obj/src/inspector/inspector/v8-schema-agent-impl.o obj/src/inspector/inspector/v8-serialization-duplicate-tracker.o obj/src/inspector/inspector/v8-stack-trace-impl.o obj/src/inspector/inspector/v8-value-utils.o obj/src/inspector/inspector/value-mirror.o || phony/src/inspector/inspector_test_headers phony/src/inspector/protocol_generated_sources obj/libv8_libbase.a phony/src/inspector/inspector_string_conversions phony/third_party/inspector_protocol/crdtp phony/v8_headers phony/cppgc_headers phony/libm obj/libv8_libplatform.a phony/third_party/inspector_protocol/crdtp_platform phony/v8_internal_headers phony/v8_flags phony/v8_shared_internal_headers obj/third_party/icu/libicui18n.a obj/third_party/icu/libicuuc.a phony/third_party/abseil-cpp/absl phony/third_party/abseil-cpp/absl/base/base phony/third_party/abseil-cpp/absl/base/log_severity phony/third_party/abseil-cpp/absl/base/raw_logging_internal phony/third_party/abseil-cpp/absl/base/spinlock_wait phony/third_party/abseil-cpp/absl/container/btree phony/third_party/abseil-cpp/absl/container/common phony/third_party/abseil-cpp/absl/types/optional phony/third_party/abseil-cpp/absl/types/bad_optional_access phony/third_party/abseil-cpp/absl/container/layout phony/third_party/abseil-cpp/absl/debugging/demangle_internal phony/third_party/abseil-cpp/absl/debugging/demangle_rust phony/third_party/abseil-cpp/absl/debugging/decode_rust_punycode phony/third_party/abseil-cpp/absl/debugging/utf8_for_code_point phony/third_party/abseil-cpp/absl/strings/strings phony/third_party/abseil-cpp/absl/strings/string_view phony/third_party/abseil-cpp/absl/base/throw_delegate phony/third_party/abseil-cpp/absl/strings/charset phony/third_party/abseil-cpp/absl/strings/internal phony/third_party/abseil-cpp/absl/base/endian phony/third_party/abseil-cpp/absl/numeric/int128 phony/third_party/abseil-cpp/absl/types/span phony/third_party/abseil-cpp/absl/strings/cord phony/third_party/abseil-cpp/absl/strings/cord_internal phony/third_party/abseil-cpp/absl/container/inlined_vector phony/third_party/abseil-cpp/absl/container/inlined_vector_internal phony/third_party/abseil-cpp/absl/crc/crc_cord_state phony/third_party/abseil-cpp/absl/crc/crc32c phony/third_party/abseil-cpp/absl/crc/cpu_detect phony/third_party/abseil-cpp/absl/crc/crc_internal phony/third_party/abseil-cpp/absl/strings/str_format phony/third_party/abseil-cpp/absl/strings/str_format_internal phony/third_party/abseil-cpp/absl/container/fixed_array phony/third_party/abseil-cpp/absl/strings/cordz_functions phony/third_party/abseil-cpp/absl/profiling/exponential_biased phony/third_party/abseil-cpp/absl/strings/cordz_info phony/third_party/abseil-cpp/absl/strings/cordz_handle phony/third_party/abseil-cpp/absl/synchronization/synchronization phony/third_party/abseil-cpp/absl/synchronization/graphcycles_internal phony/third_party/abseil-cpp/absl/base/malloc_internal phony/third_party/abseil-cpp/absl/synchronization/kernel_timeout_internal phony/third_party/abseil-cpp/absl/time/time phony/third_party/abseil-cpp/absl/time/internal/cctz/civil_time phony/third_party/abseil-cpp/absl/time/internal/cctz/time_zone phony/third_party/abseil-cpp/absl/base/tracing_internal phony/third_party/abseil-cpp/absl/debugging/stacktrace phony/third_party/abseil-cpp/absl/debugging/debugging_internal phony/third_party/abseil-cpp/absl/debugging/symbolize phony/third_party/abseil-cpp/absl/strings/cordz_update_scope phony/third_party/abseil-cpp/absl/container/flat_hash_map phony/third_party/abseil-cpp/absl/container/hash_container_defaults phony/third_party/abseil-cpp/absl/container/hash_function_defaults phony/third_party/abseil-cpp/absl/hash/hash phony/third_party/abseil-cpp/absl/hash/city phony/third_party/abseil-cpp/absl/hash/low_level_hash phony/third_party/abseil-cpp/absl/types/variant phony/third_party/abseil-cpp/absl/types/bad_variant_access phony/third_party/abseil-cpp/absl/container/raw_hash_map phony/third_party/abseil-cpp/absl/container/raw_hash_set phony/third_party/abseil-cpp/absl/container/hashtablez_sampler phony/third_party/abseil-cpp/absl/profiling/sample_recorder phony/third_party/abseil-cpp/absl/container/flat_hash_set phony/third_party/abseil-cpp/absl/container/node_hash_map phony/third_party/abseil-cpp/absl/container/node_hash_set phony/third_party/abseil-cpp/absl/debugging/failure_signal_handler phony/third_party/abseil-cpp/absl/debugging/examine_stack phony/third_party/abseil-cpp/absl/log/absl_check phony/third_party/abseil-cpp/absl/log/internal/check_impl phony/third_party/abseil-cpp/absl/log/internal/check_op phony/third_party/abseil-cpp/absl/log/internal/nullguard phony/third_party/abseil-cpp/absl/log/internal/nullstream phony/third_party/abseil-cpp/absl/log/internal/strip phony/third_party/abseil-cpp/absl/log/internal/log_message phony/third_party/abseil-cpp/absl/log/internal/append_truncated phony/third_party/abseil-cpp/absl/log/internal/format phony/third_party/abseil-cpp/absl/log/internal/globals phony/third_party/abseil-cpp/absl/log/internal/log_sink_set phony/third_party/abseil-cpp/absl/log/globals phony/third_party/abseil-cpp/absl/log/internal/vlog_config phony/third_party/abseil-cpp/absl/log/internal/fnmatch phony/third_party/abseil-cpp/absl/log/log_entry phony/third_party/abseil-cpp/absl/log/log_sink phony/third_party/abseil-cpp/absl/log/internal/proto phony/third_party/abseil-cpp/absl/base/strerror phony/third_party/abseil-cpp/absl/log/log_sink_registry phony/third_party/abseil-cpp/absl/log/internal/conditions phony/third_party/abseil-cpp/absl/log/absl_log phony/third_party/abseil-cpp/absl/log/internal/log_impl phony/third_party/abseil-cpp/absl/log/absl_vlog_is_on phony/third_party/abseil-cpp/absl/log/die_if_null phony/third_party/abseil-cpp/absl/log/log phony/third_party/abseil-cpp/absl/log/vlog_is_on phony/third_party/abseil-cpp/absl/log/initialize phony/third_party/abseil-cpp/absl/random/random phony/third_party/abseil-cpp/absl/random/distributions phony/third_party/abseil-cpp/absl/random/internal/fast_uniform_bits phony/third_party/abseil-cpp/absl/random/internal/traits phony/third_party/abseil-cpp/absl/random/internal/generate_real phony/third_party/abseil-cpp/absl/random/internal/iostream_state_saver phony/third_party/abseil-cpp/absl/random/internal/uniform_helper phony/third_party/abseil-cpp/absl/random/internal/wide_multiply phony/third_party/abseil-cpp/absl/random/seed_sequences phony/third_party/abseil-cpp/absl/random/seed_gen_exception phony/third_party/abseil-cpp/absl/random/internal/pool_urbg phony/third_party/abseil-cpp/absl/random/internal/randen phony/third_party/abseil-cpp/absl/random/internal/platform phony/third_party/abseil-cpp/absl/random/internal/randen_hwaes phony/third_party/abseil-cpp/absl/random/internal/randen_hwaes_impl phony/third_party/abseil-cpp/absl/random/internal/randen_slow phony/third_party/abseil-cpp/absl/random/internal/seed_material phony/third_party/abseil-cpp/absl/random/internal/salted_seed_seq phony/third_party/abseil-cpp/absl/random/internal/nonsecure_base phony/third_party/abseil-cpp/absl/random/internal/pcg_engine phony/third_party/abseil-cpp/absl/random/internal/randen_engine phony/third_party/abseil-cpp/absl/status/status phony/third_party/abseil-cpp/absl/status/statusor phony/v8_heap_base_headers

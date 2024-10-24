@@ -1,0 +1,3 @@
+dcheck_always_on = false
+is_debug = false
+target_cpu = "x64"
